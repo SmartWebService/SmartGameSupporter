@@ -12,4 +12,4 @@
  - 20171598 김예지 [@kookminYeji](https://github.com/kookminYeji)
  - 20181616 박정섭 [@ParkJeongseop](https://github.com/ParkJeongseop)
  - 2018???? 김경준 [@celarim](https://github.com/celarim)
- - 2018???? 이수연
+ - 20181661 이수연 [@Lsyeon](http://github.com/Lsyeon)
