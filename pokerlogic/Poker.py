@@ -44,6 +44,7 @@ def check_hand(cards):
     Fok = False
     Tok = False
     numPair = 0
+    backstraight = False
 
     card_sort(cards) #카드들을 내림차순으로 정렬
 
@@ -56,6 +57,7 @@ def check_hand(cards):
         straight = True
     elif straightCounter == 3 and cards[0].get_rank() == 12 and cards[1].get_rank() == 3:
         straight = True
+        backstraight = True
 
     '''플러시 확인'''
     for i in range(5):
@@ -92,6 +94,8 @@ def check_hand(cards):
 
     if  (straight and flush):
         handtype = 'Straight Flush'
+        if backstraight:
+            highcard = cards[1]
     elif (Fok):
         handtype = 'Four of A Kind'
     elif (numPair == 1 and Tok):
@@ -100,6 +104,8 @@ def check_hand(cards):
         handtype = 'Flush'
     elif straight:
         handtype = 'Straight'
+        if backstraight:
+            highcard = cards[1]
     elif Tok:
         handtype = 'Three Of A Kind'
     elif numPair == 2:
@@ -126,11 +132,11 @@ def card_sort(cards5):
 
 
 if __name__ == '__main__':
-    fc = Card(0, 8)
-    sc = Card(0, 10)
-    tc = Card(1, 8)
-    fourc = Card(2, 10)
-    fifc = Card(2, 12)
+    fc = Card(0, 12)
+    sc = Card(0, 2)
+    tc = Card(1, 1)
+    fourc = Card(2, 0)
+    fifc = Card(2, 3)
     cards = [fc, sc, tc, fourc, fifc]
     for i in range(5):
         print(cards[i])
