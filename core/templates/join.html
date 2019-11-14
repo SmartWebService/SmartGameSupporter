@@ -1,0 +1,10 @@
+
+logo
+
+<form action="/join" method="post">
+    {% csrf_token %}
+    <input name="game_code" placeholder="입장코드" minlength="6" maxlength="6"required>
+    <!-- type="number" 로하면 길이제한이 안걸림 -->
+    <input type="text" name="username" placeholder="닉네임" id="" required>
+    <button type="submit">참가</button>
+</form>
