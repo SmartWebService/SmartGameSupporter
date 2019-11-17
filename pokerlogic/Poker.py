@@ -8,7 +8,7 @@
         문양순서대로 점수가 높다'''
 
 rank_list = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
-suit_list = ['CLOVER', 'HEART', 'DIAMOND', 'SPADE']
+suit_list = ['C', 'D', 'H', 'S']
 type_tuple = ('High Card', 'Pair', 'Two Pair', 'Three Of A Kind', 'Straight', 'Flush',
               'Full House', 'Four Of A Kind', 'Straight Flush')
 
