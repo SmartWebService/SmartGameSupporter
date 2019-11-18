@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <style>
+        .container {
+            width: 100%;
+            height: 100%;
+        }
+
+        .card_view{
+            width: 100%;
+            height: 70%;
+
+            float: none;
+            position: absolute; top: 0; left: 0;
+            background-image: url("boardimg.png");
+
+        }
+
+        .button_view{
+            width: 100%;
+            height: 30%;
+
+            float: left;
+            position: absolute; top: 70%; left: 0;
+            background-image: url("boardimg.png");
+        }
+
+        .player_card{
+            height: 100%;
+            width: auto;
+
+        }
+        .card1{
+            width: 55%;
+            height: 55%;
+            float: left;
+            position: absolute; top: 25%; left: 10%;
+
+        }
+        .card2{
+            width: 55%;
+            height: 55%;
+            float: left;
+            position: absolute; top: 25%; left: 25%;
+
+        }
+        .card3{
+            width: 55%;
+            height: 55%;
+            float: left;
+            position: absolute; top: 25%; left: 40%;
+
+        }
+        .card4{
+            width: 55%;
+            height: 55%;
+            float: left;
+            position: absolute; top: 25%; left: 55%;
+
+        }
+        .card5{
+            width: 55%;
+            height: 55%;
+            float: left;
+            position: absolute; top: 25%; left: 70%;
+
+        }
+
+        .coin_view{
+            width: 30%;
+            height: 17%;
+            background-image: url("boardimg.png");
+            position: absolute; top: 3%; left: 3%;
+            float:left;
+
+        }
+        .coin_image{
+            width: 70%;
+            height: 100%;
+            background-image: url("boardimg.png");
+        }
+
+        .coin_txt {
+            font-size: 2vw;
+            position: absolute;
+            top: 0%;
+            left: 27%;
+            float: left;
+
+        }
+        .button_call{
+            width: 25%;
+            height: 45%;
+            background-color: rebeccapurple;
+            position: absolute; top: 25%; left: 5%;
+            float:left;
+            border: 0;
+            padding: 0;
+        }
+
+        .button_raise{
+            width: 25%;
+            height: 45%;
+            background-color: white;
+            position: absolute; top: 30%; left: 38%;
+            float:left;
+        }
+        .button_die{
+            width: 25%;
+            height: 45%;
+            background-color: blue;
+            position: absolute; top: 30%; left: 70%;
+            float:left;
+        }
+        .callimage{
+            width: 100%;
+            height: auto;
+        }
+
+        .button {
+            width: 25%;
+            height: 70%;
+            font-family: 'Roboto', sans-serif;
+            font-size: 2vW;
+            text-transform: uppercase;
+            letter-spacing: 2.5px;
+            font-weight: 500;
+            color: #000;
+            background-color: #fff;
+            border: none;
+            border-radius: 45px;
+            box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.57);
+            transition: all 0.3s ease 0s;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .button:hover {
+            background-color: #ffff;
+            box-shadow: 0px 15px 20px rgba(51, 51, 53, 0.49);
+            color: #000;
+            transform: translateY(+7px);
+        }
+
+    </style>
+
+
+</head>
+<body>
+    <div class="container">
+        <div class="card_view">
+            <div class="coin_view">
+
+                <img class="coin_image" src="baticon.png" >
+                <div class="coin_txt">
+                    <p>100</p>
+                </div>
+            </div>
+            <div class="card1">
+                <img class="player_card" src="back.png">
+            </div>
+
+            <div class="card2">
+                <img class="player_card" src="back.png">
+            </div>
+
+            <div class="card3">
+                <img class="player_card" src="back.png">
+            </div>
+
+            <div class="card4">
+                <img class="player_card" src="back.png">
+            </div>
+
+            <div class="card5">
+                <img class="player_card" src="back.png">
+            </div>
+        </div>
+        <div class="button_view">
+            <button class="button" style="position: absolute; top: 7%; left: 7%;" >Call</button>
+            <button class="button" style="position: absolute; top: 7%; left: 38%;" >Raise</button>
+            <button class="button" style="position: absolute; top: 7%; left: 69%;" >Die</button>
+
+
+        </div>
+    </div>
+
+
+
+</body>
+</html>
