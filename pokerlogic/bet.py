@@ -25,8 +25,9 @@ class Player:
     def get_bet_chips(self):
         return self.bet_chips
 
-    def view_cards(self):
-        card_sort(self.cards)
+    def view_cards(self, sorted=True):
+        if sorted:
+            card_sort(self.cards)
         cards_string = ""
         for card in self.cards:
             if card == self.cards[4]:
@@ -66,6 +67,10 @@ class Player:
 
     def is_die(self):
         return self.die
+
+    def get_type(self):
+        cards_type = check_hand(self.cards)
+        return(cards_type[0])
 
     def change_point(self):
         cards_type = check_hand(self.cards)
@@ -151,20 +156,21 @@ def one_game(p1, p2, p3, p4):
             endgame = True
 '''
 
+
 class PokerGame:
     def __init__(self, p1, p2, p3, p4):
         self.nowbet = 1
         self.raisecount = 0
-        self.raiseplayer = p1
+        self.raiseplayer: Player = p1
         self.diecount = 0
         self.allincount = 0
-        self.p1 = p1
-        self.p2 = p2
-        self.p3 = p3
-        self.p4 = p4
+        self.p1: Player = p1
+        self.p2: Player = p2
+        self.p3: Player = p3
+        self.p4: Player = p4
         self.all_player = [self.p1, self.p2, self.p3, self.p4]
         self.carddump = CardDump()
-        self.nowplayer = p1
+        self.nowplayer: Player = p1
 
     def get_nowplayer(self):
         return self.nowplayer
@@ -194,7 +200,6 @@ class PokerGame:
                     winner.add_chip(player.get_bet_chips())
         else:
             winner.add_chip(self.get_all_bet())
-        self.clear_game()
 
     def clear_game(self):
         for player in self.all_player:
@@ -243,14 +248,14 @@ class PokerGame:
             return False
 
     def check_winner(self):
-        PL = [self.p1, self.p2, self.p3, self.p4]
         a = [[], []]
-        for player in PL:
+        for player in self.all_player:
             if player.is_die():
                 continue
             else:
                 a[0].append(player.change_point())
                 a[1].append(player)
+
         if len(a[0]) == 1:
             winner = a[1][0]
         else:
@@ -346,51 +351,63 @@ if __name__ == '__main__':
     p3.set_chip(100)
     p4.set_chip(100)
 
+    print("all player's basic chips is 100")
+
     game = PokerGame(p1, p2, p3, p4)
+
+    print('all basic beted')
     game.all_basic_bet()
     game.all_give_hand()
+
     while True:
         string = ""
-        print("player {}'s turn, now bet is {}, all bet is {}".format(game.nowplayer.id, game.nowbet, game.get_all_bet()))
+        NP = game.get_nowplayer()
+        print("player {}'s turn, now bet is {}, all bet is {}".format(NP.id, game.nowbet, game.get_all_bet()))
+        print(NP.view_cards(False))
         string = input("die - d, raise - r, call, c : ")
         if string != 'd' and string != 'r' and string != 'c':
             continue
 
         if string == 'd':
-            game.die(game.nowplayer)
+            game.die(NP)
 
         elif string == 'r':
-            if game.check_all_in(game.nowplayer, game.nowbet):
+            if game.check_all_in(NP, game.nowbet):
                 print("your chips are less than now betting, you can only do call(all-in) or die")
                 continue
             else:
-                raise_chip = int(input("how do you raise? : "))
+                raise_chip = input("how do you raise? : ")
+                try:
+                    raise_chip = int(raise_chip)
+                except(ValueError):
+                    print("please input number")
+                    continue
                 if game.check_raise(raise_chip):
-                    if game.check_all_in(game.nowplayer, raise_chip):
+                    if game.check_all_in(NP, raise_chip):
                         print("your chips are less than your raise chips")
-                        answer = input("if you want to do all-in raise with {}chips more, enter y : ".format(game.nowplayer.get_chip()))
+                        answer = input("if you want to do all-in raise with {}chips more, enter y : ".format(NP.get_chip()))
                         if answer == 'y':
-                            game.rais(game.nowplayer, game.nowplayer.get_chip())
-                            game.all_in(game.nowplayer)
+                            game.rais(NP, NP.get_chip())
+                            game.all_in(NP)
                         else:
                             continue
                     else:
-                        game.rais(game.nowplayer, raise_chip)
+                        game.rais(NP, raise_chip)
                 else:
                     continue
 
         elif string == 'c':
-            if game.check_all_in(game.nowplayer, game.nowbet):
+            if game.check_all_in(NP, game.nowbet):
                 print("your bet chip is less than now betting, do you want all-in?")
                 answer = input("if you want all_in, enter y : ")
                 if answer == 'y':
-                    game.all_in(game.nowplayer)
+                    game.all_in(NP)
                 else:
                     continue
             else:
-                game.call(game.nowplayer)
+                game.call(NP)
 
-        if game.check_break(game.nowplayer):
+        if game.check_break(NP):
             break
 
         game.next_player()
@@ -398,18 +415,16 @@ if __name__ == '__main__':
     winner = game.check_winner()
 
     print("winner is {}, the card is {}".format(winner.id, winner.view_cards()))
-
-    print(p1.id, p1.view_cards())
-    print(p2.id, p2.view_cards())
-    print(p3.id, p3.view_cards())
-    print(p4.id, p4.view_cards())
+    print()
 
     game.give_winner_chips(winner)
 
     for player in game.all_player:
-        print(player.id, player.get_chip())
+        print("player {}'s card : {}\n{}, remain chips : {}".format(player.id, player.view_cards(),
+                                                                   player.get_type(), player.get_chip()))
+        print()
 
-
+    game.clear_game()
 
 
             

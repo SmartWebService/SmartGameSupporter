@@ -16,8 +16,8 @@ type_tuple = ('High Card', 'Pair', 'Two Pair', 'Three Of A Kind', 'Straight', 'F
 class Card:
 
     def __init__(self, suit, rank):
-        self.__suit = suit
-        self.__rank = rank
+        self.__suit: int = suit
+        self.__rank: int = rank
 
     def get_rank(self):
         return self.__rank
@@ -30,6 +30,8 @@ class Card:
 
     def __str__(self):
         return suit_list[self.__suit] + rank_list[self.__rank]
+
+
 
 
 '''CH함수
