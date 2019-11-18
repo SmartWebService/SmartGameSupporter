@@ -426,6 +426,8 @@ if __name__ == '__main__':
 
     game.clear_game()
 
+    a = input('press any button')
+
 
             
 
