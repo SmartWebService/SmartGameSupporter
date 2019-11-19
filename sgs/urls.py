@@ -15,13 +15,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf.urls import url, include
 import core.views
 import game.views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', core.views.lobby),
-    path('new', core.views.host),
-    path('join', core.views.participant),
-    # path('')
+    path('', core.views.lobby, name='lobby'),
+    path('new', core.views.new, name='new'),
+    path('join', core.views.join, name='join'),
+    path('room/<int:game_code>', core.views.room, name='room'),
+    path('game/<int:game_code>', core.views.in_game, name='game'),
+    url(r'^sgs/', include('core.urls')),
 ]
