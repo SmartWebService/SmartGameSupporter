@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<link href="{% static 'join.css' %}" rel="stylesheet">
+<style>
+    input[type=text] {
+        width: 35%;
+        padding: 12px 20px;
+        margin: 10px 0;
+        display: inline-block;
+        border: 1px solid #eaeaea;
+        border-radius: 10px;
+        box-sizing: border-box;
+        font-family: 'Roboto', sans-serif;
+        font-size: 15px;
+    }
+</style>
+
+<body>
+    <div class="logo" style="margin-top: 7%">
+        <img src="{% static 'logo.png' %}" width="250px" height="auto" />
+        <div class="logotext" style="margin-top: -1%">
+            <p>Smart Game Supporter</p>
+        </div>
+        <div class="maintext" style="margin-top: 4%">
+            <p>Enter your Game code and nickname
+            </p>
+        </div>
+    </div>
+
+    <form action="/join" method="post">
+        {% csrf_token %}
+
+        <div class="input" style="text-align: center; margin-top: 0%">
+            <input type="text" id="game_code" name="game_code" placeholder="Game Code" minlength="6" maxlength="6" required>
+            <br>
+            <input type="text" id="username" name="username" placeholder="Nick Name" required>
+        </div>
+        <div class="wrap" style="text-align: center; margin-top: 2%">
+            <button class="button">Join</button>
+        </div>
+    </form>
+
+
+
+</body>
+
+</html>
