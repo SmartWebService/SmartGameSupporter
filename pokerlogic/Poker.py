@@ -62,7 +62,7 @@ def check_hand(cards):
         backstraight = True
 
     '''플러시 확인'''
-    for i in range(5):
+    for i in range(len(cards)):
         if cards[0].get_suit() != cards[i].get_suit():
             break
     else:
@@ -70,9 +70,9 @@ def check_hand(cards):
 
     '''같은 숫자 확인'''
     toc = Card(0,0) #페어일 경우 가장높은 카드
-    for i in range(5):
+    for i in range(len(cards)):
         cnt = 0
-        for j in range(0, 5):
+        for j in range(0, len(cards)):
             if cards[i].get_rank() == cards[j].get_rank():
                 cnt += 1
         if cnt == 2:

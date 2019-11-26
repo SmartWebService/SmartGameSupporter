@@ -96,6 +96,9 @@ class CardDump:
         for i in range(52):
             self.cards.add(i)
 
+    def get_len(self):
+        return len(self.cards)
+
     def view_dump(self):
         print()
         for card in self.cards:
@@ -167,10 +170,10 @@ def one_game(p1, p2, p3, p4):
 
 
 class PokerGame:
-    def __init__(self, p1, p2, p3, p4):
+    def __init__(self, p1: Player, p2: Player, p3: Player, p4: Player):
         self.nowbet = 1
         self.raisecount = 0
-        self.raiseplayer: Player = p1
+        self.callcount = 0
         self.diecount = 0
         self.allincount = 0
         self.p1: Player = p1
@@ -180,6 +183,12 @@ class PokerGame:
         self.all_player = [self.p1, self.p2, self.p3, self.p4]
         self.carddump = CardDump()
         self.nowplayer: Player = p1
+
+    def reload_player(self):
+        self.p1.set_players(self.p4, self.p2)
+        self.p2.set_players(self.p1, self.p3)
+        self.p3.set_players(self.p2, self.p4)
+        self.p4.set_players(self.p3, self.p1)
 
     def get_nowplayer(self):
         return self.nowplayer
@@ -223,6 +232,7 @@ class PokerGame:
         for player in self.all_player:
             player.clear()
         self.carddump.clear()
+        self.reload_player()
 
     def all_in(self, player):
         player.beforeplayer.afterplayer = player.afterplayer
@@ -238,13 +248,14 @@ class PokerGame:
 
     def call(self, player):
         if self.nowbet >= player.get_chip():
-            pass
+            print('error')
         else:
             player.betting(self.nowbet)
+            self.callcount += 1
 
     def rais(self, player, chips):
         self.nowbet = chips
-        self.raiseplayer = player
+        self.callcount = 0
         self.call(player)
 
     def check_all_in(self, player, chip):
@@ -260,7 +271,7 @@ class PokerGame:
             return True
 
     def check_break(self, player):
-        if self.diecount >= 3 or self.diecount + self.allincount >= 4 or player.afterplayer == self.raiseplayer:
+        if self.diecount >= 3 or self.diecount + self.callcount + self.allincount >= 4:
             return True
         else:
             return False
@@ -484,22 +495,23 @@ if __name__ == '__main__':
         game.next_player()'''
 
     for player in game.all_player:
-        index = []
-        print("player {}, which card do you want to change? \n(nothing is -1, your card is {})".format(player.id, player.view_cards(False)))
-        while True:
-            try:
-                 a = int(input())
-            except(ValueError):
-                print("please input number")
-                continue
-            cardin = [1,2,3,4,0]
-            if a in cardin and a not in index:
-                index.append(a)
-            elif a == -1:
-                break
-            else:
-                print("please input 0~4, if you do not want to change, input -1")
-        game.change_hand(player, index)
+        if not player.is_die():
+            index = []
+            print("player {}, which card do you want to change? \n(nothing is -1, your card is {})".format(player.id, player.view_cards(False)))
+            while True:
+                try:
+                     a = int(input())
+                except(ValueError):
+                    print("please input number")
+                    continue
+                cardin = [1,2,3,4,0]
+                if a in cardin and a not in index:
+                    index.append(a)
+                elif a == -1:
+                    break
+                else:
+                    print("please input 0~4, if you do not want to change, input -1")
+            game.change_hand(player, index)
     game.next_player()
     onebetting(game)
 
