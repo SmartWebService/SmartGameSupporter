@@ -29,11 +29,18 @@
                 var participants = data['list'];
                 console.log(participants);
                 // document.getElementById("userList").innerHTML = "";
+                document.querySelector('.userlist').textContent = "";
                 for(var i=0; i<participants.length; i++){
                     console.log("<li>" + participants[i] +"</li>");
                     // document.getElementById("userList").append("<li>" + participants[i] +"</li>");
-                    document.querySelector('.userlist').append(participants[i]);
+                    document.querySelector('.userlist').append(participants[i]+"  ");
                     // document.getElementById("userList").innerHTML += "<li>" + participants +"</li>";
+                }
+                
+                if(participants.length == 1 ){
+                    // var button = document.
+
+                    button.
                 }
             }
             
@@ -71,7 +78,7 @@
 </div>
 {% if type == 0 %}
 <div class="wrap">
-    <button class="button" style="margin: 4% 18% 0 0;">Game START</button>
+    <button id="start" class="button" style="margin: 4% 18% 0 0; visibility: hidden;">Game START</button>
 </div>
 {% else %}
 <div class="wrap">
