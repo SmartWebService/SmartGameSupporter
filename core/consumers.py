@@ -62,7 +62,7 @@ class SGSConsumer(WebsocketConsumer):
   # WebSocket 에게 메세지 receive
   def receive(self, text_data):
     text_data_json = json.loads(text_data)
-    message = text_data_json['message']
+    message = text_data_json['opcode']
     print(self)
     print(message)
     print(self.username)
