@@ -148,7 +148,59 @@
         }
 
     </style>
+    <script>
+        var type = {{ type }};
+        var game_code = {{ game_code }};
+        var username = "{{ username }}";
+        var sessionKey = "{{ sessionKey }}";
+        
+        if(type == 0) {
+            var chatSocket = new WebSocket(
+            'ws://' + window.location.host +
+            '/ws/sgs/' + type + '/' + game_code + '/' + sessionKey + '/');
+        }else{
+            var chatSocket = new WebSocket(
+            'ws://' + window.location.host +
+            '/ws/sgs/' + type + '/' + game_code + '/' + username + '/' + sessionKey + '/');
+        };
+        
+            function call(){
+                var message = 'call';
+                chatSocket.send(JSON.stringify({
+                'opcode': message
+                }));
 
+                chatSocket.onmessage = function (e) {
+                var data = JSON.parse(e.data);
+                console.log(data);
+                }
+                
+            }
+            function raise(){
+                var message = 'raise';
+                chatSocket.send(JSON.stringify({
+                'opcode': message
+                }));
+
+                chatSocket.onmessage = function (e) {
+                var data = JSON.parse(e.data);
+                console.log(data);
+                }
+                
+            }
+            function die(){
+                var message = 'die';
+                chatSocket.send(JSON.stringify({
+                'opcode': message
+                }));
+
+                chatSocket.onmessage = function (e) {
+                var data = JSON.parse(e.data);
+                console.log(data);
+                }
+                
+            }
+    </script>
 
 </head>
 <body>
@@ -182,9 +234,9 @@
             </div>
         </div>
         <div class="button_view">
-            <button class="button" style="position: absolute; top: 7%; left: 7%;" >Call</button>
-            <button class="button" style="position: absolute; top: 7%; left: 38%;" >Raise</button>
-            <button class="button" style="position: absolute; top: 7%; left: 69%;" >Die</button>
+            <button class="button" style="position: absolute; top: 7%; left: 7%;" onclick ="call()" >Call</button>
+            <button class="button" style="position: absolute; top: 7%; left: 38%;" onclick ="raise()">Raise</button>
+            <button class="button" style="position: absolute; top: 7%; left: 69%;"onclick ="die()" >Die</button>
 
 
         </div>
