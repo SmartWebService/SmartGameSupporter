@@ -20,6 +20,19 @@
             '/ws/sgs/' + type + '/' + game_code + '/' + username + '/' + sessionKey + '/');
         };
         
+
+        function gamestart(){
+            var message = 'game_start';
+            chatSocket.send(JSON.stringify({
+            'opcode': message
+            }));
+
+            chatSocket.onmessage = function (e) {
+            var data = JSON.parse(e.data);
+            console.log(data);
+            }
+            location.href = "/game/" + game_code;
+        }
         document.addEventListener("DOMContentLoaded", function (event) {
             chatSocket.onmessage = function (e) {
             var data = JSON.parse(e.data);
@@ -37,11 +50,15 @@
                     // document.getElementById("userList").innerHTML += "<li>" + participants +"</li>";
                 }
                 
-                if(participants.length == 1 ){
+                if(participants.length > 0 ){
                     // var button = document.
-
-                    button.
+                    var start = document.getElementsByTagName("button")[0];
+                    start.style.visibility = "visible";                    
+                    
                 }
+            }
+            else if(data['opcode'] == 'game_start'){
+                location.href = "/game/" + game_code;
             }
             
             
@@ -78,7 +95,7 @@
 </div>
 {% if type == 0 %}
 <div class="wrap">
-    <button id="start" class="button" style="margin: 4% 18% 0 0; visibility: hidden;">Game START</button>
+    <button id="start" class="button" style="margin: 4% 18% 0 0; visibility: hidden;" onclick="gamestart()" >Game START</button>
 </div>
 {% else %}
 <div class="wrap">

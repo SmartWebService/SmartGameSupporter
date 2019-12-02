@@ -64,8 +64,8 @@ def room(request, game_code):
                                              
     return redirect('lobby')                                # 비정상 접근 -> 홈으로
 
-def in_game(request, game_code):
-    return redirect('lobby')
+
+
 
 def index(request):
     return render(request, 'lobby.html', {})
