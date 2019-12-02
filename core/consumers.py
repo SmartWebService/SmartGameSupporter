@@ -47,9 +47,10 @@ class SGSConsumer(WebsocketConsumer):
     self.participant_refresh()
 
   def disconnect(self, close_code):
-    if self.type == 0:
+    if self.type == 0: # 호스트가 연결이 끊어진 경우 방 폭파
       room_manager.del_room(self.room)
-    else:
+      self.host_out()
+    else: # 참가자가 연결이 끊어진경우 퇴장
       self.user.delete()
     # del self.user
     print("deleted")
@@ -62,10 +63,21 @@ class SGSConsumer(WebsocketConsumer):
   # WebSocket 에게 메세지 receive
   def receive(self, text_data):
     text_data_json = json.loads(text_data)
-    message = text_data_json['message']
-    print(self)
-    print(message)
-    print(self.username)
+    op = text_data_json['opcode']
+
+    if op == "start_request":
+      if self.type == 0: # 게임시작은 호스트만 가능
+        selected_game = text_data_json['game']
+        self.room.selected_game = selected_game
+    elif op == "":
+      pass
+    elif op == "":
+      pass
+
+    # message = text_data_json['message']
+    # print(self)
+    # print(message)
+    # print(self.username)
     # room group 에게 메세지 send
     async_to_sync(self.channel_layer.group_send)(
       self.room_group_name,
@@ -93,8 +105,6 @@ class SGSConsumer(WebsocketConsumer):
         }
     )
 
-    # room group 에서 메세지 receive
-
   def participant_refresh_send(self, event):
     participant_list = self.room.room_participants
     print("log", list(map(str, participant_list)))
@@ -102,4 +112,17 @@ class SGSConsumer(WebsocketConsumer):
     self.send(text_data=json.dumps({
         'opcode': 'p_refresh',
         'list': list(map(str, participant_list))
+    }))
+
+  def host_out(self):
+    async_to_sync(self.channel_layer.group_send)(
+        self.room_group_name,
+        {
+            'type': 'host_out_send'
+        }
+    )
+
+  def host_out_send(self, event):
+    self.send(text_data=json.dumps({
+        'opcode': 'host_out'
     }))
