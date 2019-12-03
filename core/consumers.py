@@ -3,27 +3,26 @@ from channels.generic.websocket import WebsocketConsumer
 import json
 from .core import *
 from .bcolor import bcolors
-
-room_manager = RoomManager()
+import core.core
 
 
 class SGSConsumer(WebsocketConsumer):
   def connect(self):
-    global room_manager
+    core.core.room_manager
 
     self.type = int(self.scope['url_route']['kwargs']['type'])
     self.game_code = self.scope['url_route']['kwargs']['game_code']
     self.sessionKey = self.scope['url_route']['kwargs']['sessionKey']
-    self.room = room_manager.get_room(self.game_code)
+    self.room = core.core.room_manager.get_room(self.game_code)
 
     print(bcolors.BLUE + "Now Room List: " +
-          ", ".join(map(str, room_manager.room_list)) + bcolors.ENDC)
+          ", ".join(map(str, core.core.room_manager.room_list)) + bcolors.ENDC)
 
     if self.type == 1:  # 참가자
       self.username = self.scope['url_route']['kwargs']['username']
       self.user = User(self.sessionKey, self.username)
 
-      myroom = room_manager.get_room(self.game_code)
+      myroom = core.core.room_manager.get_room(self.game_code)
       if myroom == None:
         pass  # 사용자가 입력한 방코드에 방이 없는 경우로 예외처리 필요
       else:
@@ -48,7 +47,7 @@ class SGSConsumer(WebsocketConsumer):
 
   def disconnect(self, close_code):
     if self.type == 0: # 호스트가 연결이 끊어진 경우 방 폭파
-      room_manager.del_room(self.room)
+      core.core.room_manager.del_room(self.room)
       self.host_out()
     else: # 참가자가 연결이 끊어진경우 퇴장
       self.user.delete()
