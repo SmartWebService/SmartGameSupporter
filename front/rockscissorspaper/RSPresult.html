@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="RSPmain.css" rel="stylesheet">
+    <title></title>
+    <style>
+        body{
+            background-color: #FFEA00;
+            text-align: center;
+            height: ;
+        }
+        .random img{
+            position: relative;
+            width: 40%;
+            height: 100%;
+            overflow: hidden;
+            padding-bottom: 0%;
+        }
+    </style><div class="RSPlogo">
+    <script language = "javascript">
+        var imgArray = new Array();
+        imgArray[0] = "R.png";
+        imgArray[1] = "P.png";
+        imgArray[2] = "S.png"
+
+
+        function showImage(){
+            var imgNum = Math.round(Math.random()*2);
+            var objImg = document.getElementById("introImg");
+            objImg.src = imgArray[imgNum];
+        }
+    </script>
+
+</div>
+
+</head>
+<body onload = "showImage()">
+<div class="random">
+    <img id = "introImg" border="0">
+</div>
+<div class="wrap" onclick="location.href='RSPmain.html'" align="right">
+    <button class="button" style="margin: 4% 18% 0 0;">RETRY</button>
+</div>
+</body>
+</html>
