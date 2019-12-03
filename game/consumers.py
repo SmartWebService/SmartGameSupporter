@@ -9,7 +9,7 @@ from core.bcolor import bcolors
 
 class RPSConsumer(WebsocketConsumer):
   def connect(self):
-    global core.consumers.room_manager
+    # global core.consumers.room_manager
 
     self.type = int(self.scope['url_route']['kwargs']['type'])
     self.game_code = self.scope['url_route']['kwargs']['game_code']

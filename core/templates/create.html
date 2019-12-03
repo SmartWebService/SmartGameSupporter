@@ -22,16 +22,17 @@
         
 
         function gamestart(){
+            var gamename = document.querySelector('input[name="1"]:checked').value;
             var message = 'game_start';
+            alert(gamename);
             chatSocket.send(JSON.stringify({
-            'opcode': message
+            'opcode': message,
+            'gamename': gamename
             }));
 
-            chatSocket.onmessage = function (e) {
-            var data = JSON.parse(e.data);
-            console.log(data);
-            }
-            location.href = "/game/" + game_code;
+            
+            //location.href = "/game/" + game_code;
+            
         }
         document.addEventListener("DOMContentLoaded", function (event) {
             chatSocket.onmessage = function (e) {
@@ -59,6 +60,9 @@
             }
             else if(data['opcode'] == 'game_start'){
                 location.href = "/game/" + game_code;
+            }
+            else if(data['opcode'] == 'host_out'){
+                location.href = "/";
             }
             
             
@@ -105,7 +109,7 @@
 <div class="continput" style="margin: 20% 10% 10% 42%">
     <ul>
         <li>
-            <input checked type="radio" name="1">
+            <input checked type="radio" name="1" value="FIVE_POKER">
             <label>FIVE POKER</label>
             <div class="bullet">
                 <div class="line zero"></div>
@@ -119,7 +123,7 @@
             </div>
         </li>
         <li>
-            <input type="radio" name="1">
+            <input type="radio" name="1" value="MAPIA">
             <label>MAPIA</label>
             <div class="bullet">
                 <div class="line zero"></div>
