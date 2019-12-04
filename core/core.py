@@ -65,3 +65,7 @@ class User:
 
     def __str__(self):
         return self.nickname
+
+
+global room_manager
+room_manager = RoomManager()
