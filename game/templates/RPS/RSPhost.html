@@ -49,20 +49,10 @@
         imgArray[1] = "{% static 'RPS/P.png' %}";
         imgArray[2] = "{% static 'RPS/S.png' %}"
 
-        var type = {{ type }};
-        var game_code = {{ game_code }};
-        var username = "{{ username }}";
         var sessionKey = "{{ sessionKey }}";
         
-        if(type == 0) {
-            var chatSocket = new WebSocket(
-            'ws://' + window.location.host +
-            '/ws/sgs/' + type + '/' + game_code + '/' + sessionKey + '/');
-        }else{
-            var chatSocket = new WebSocket(
-            'ws://' + window.location.host +
-            '/ws/sgs/' + type + '/' + game_code + '/' + username + '/' + sessionKey + '/');
-        };
+        var chatSocket = new WebSocket(
+            'ws://' + window.location.host + '/ws/sgs/RPS/' + sessionKey + '/');
 
 
         function showImage(){

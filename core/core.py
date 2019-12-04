@@ -100,6 +100,7 @@ class User:
     # socketObject = None
 
     def __init__(self, sessionKey, nickname=None):
+        print("__init__", sessionKey)
         self.sessionKey = sessionKey
         self.nickname = nickname
 
@@ -110,7 +111,7 @@ class User:
 
 
     def __str__(self):
-        if self.isParticipant:
+        if self.isParticipant():
             return self.nickname
         else:
             return str(self.room.room_code) + "'s host"

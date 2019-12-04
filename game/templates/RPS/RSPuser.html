@@ -25,20 +25,10 @@
         }
     </style>
     <script language = "javascript">
-        var type = {{ type }};
-        var game_code = {{ game_code }};
-        var username = "{{ username }}";
         var sessionKey = "{{ sessionKey }}";
         
-        if(type == 0) {
-            var chatSocket = new WebSocket(
-            'ws://' + window.location.host +
-            '/ws/sgs/' + type + '/' + game_code + '/' + sessionKey + '/');
-        }else{
-            var chatSocket = new WebSocket(
-            'ws://' + window.location.host +
-            '/ws/sgs/' + type + '/' + game_code + '/' + username + '/' + sessionKey + '/');
-        };
+        var chatSocket = new WebSocket(
+            'ws://' + window.location.host + '/ws/sgs/RPS/' + sessionKey + '/');
 
 
         function btnR_click(){
@@ -73,7 +63,9 @@
                     document.body.style.backgroundColor = "gray";
                 }
             };
+        };
         });
+        
     </script>
 </head>
 <body>
@@ -84,7 +76,7 @@
     <button type="button" class="btn" onclick="btnS_click();">
         <img src="{% static 'RPS/scissors.png' %}">
     </button>
-    <button type="button" class="btn" onclick="btnP_click()">
+    <button type="button" class="btn" onclick="btnP_click();">
         <img src="{% static 'RPS/paper.png' %}">
     </button>
 </div>
