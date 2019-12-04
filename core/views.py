@@ -3,6 +3,7 @@ import json
 from .consumers import *
 from .bcolor import bcolors
 import core.core
+from django.http import HttpResponse, JsonResponse
 
 # Create your views here.
 def lobby(request):
@@ -70,3 +71,15 @@ def room(request, game_code):
 
 def index(request):
     return render(request, 'lobby.html', {})
+
+
+def api_iot(request, device_code):
+    room = core.core.room_manager.get_room_by_iot_code(device_code)
+    if room == None:
+        data = dict()
+        data["opcode"] = "error"
+        data["des"] = "can not find room"
+        return JsonResponse(data, json_dumps_params = {'ensure_ascii': True})
+        
+    room.game_obj
+    return redirect('home')
