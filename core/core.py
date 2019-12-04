@@ -1,4 +1,6 @@
 from random import *
+# from  game.GameLogic import *
+import game.GameLogic.RPS
 
 class RoomManager:
     room_list = []
@@ -46,7 +48,7 @@ class RoomManager:
 class Room:
     room_code = None            # 방코드 (int)
     selected_game = None        # 선택된게임의 String
-    # 게임객체
+    game_obj = None             # 게임객체
     room_host = None            # 호스트의 User객체
     room_participants = []      # 유저객체들의 리스트
 
@@ -73,6 +75,14 @@ class Room:
             return False
         else:
             return True
+    
+    def start_game(self, selected_game):
+        self.selected_game = selected_game
+        if selected_game == "RPS":
+            self.game_obj = game.GameLogic.RPS.RPS(self.room_host, self.room_participants)
+        elif selected_game == "five-poker":
+            pass
+        
 
 
 class User:

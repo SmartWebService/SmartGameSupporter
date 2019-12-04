@@ -74,7 +74,7 @@ class SGSConsumer(WebsocketConsumer):
         if selected_game == "RPS":
           print(self.room.num_of_participants())
           if self.room.num_of_participants() > 0: #참가자가 한명이상
-            self.room.selected_game = selected_game
+            self.room.start_game(selected_game)
             self.game_start()
         elif selected_game == "five-poker":
           pass
@@ -165,7 +165,6 @@ class SGSConsumer(WebsocketConsumer):
     )
 
   def game_start_send(self, event):
-    print(" def game_start_send(self, event):")
     self.send(text_data=json.dumps({
         'opcode': 'game_start'
     }))

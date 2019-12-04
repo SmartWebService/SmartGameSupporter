@@ -1,4 +1,5 @@
 from random import *
+import core.core
 
 
 class Player():
@@ -18,11 +19,12 @@ class RPS:
     players = []
 
     def __init__(self, host, participants):  # 새 가위바위보 게임 객체
+        print("Started RPS at ", host.room.room_code)
         self.host = host
         self.participants = participants
-        self.participants_2_player()
+        self.participants_to_player()
 
-    def participants_2_player(self):
+    def participants_to_player(self):
         for participant in self.participants:
             self.players.append(Player(participant))
     
@@ -33,7 +35,15 @@ class RPS:
         
     def decision(self):
         host_pick = randint(0,2)
-        
+        R_players = []
+        P_players = []
+        S_players = []
 
-
-    
+        for player in self.players:
+            if player.RPS_container == 'R':
+                R_players.append(player)
+            elif player.RPS_container == 'P':
+                P_players.append(player)
+            elif player.RPS_container == 'S':
+                S_players.append(player)
+            

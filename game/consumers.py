@@ -4,36 +4,20 @@ import json
 from core.core import *
 from core.bcolor import bcolors
 import core.core
-
+import game.GameLogic.RPS
 
 class RPSConsumer(WebsocketConsumer):
   def connect(self):
-    core.core.room_manager
+    print(core.core.room_manager)
+    # core.core.room_manager
 
-    self.type = int(self.scope['url_route']['kwargs']['type'])
-    self.game_code = self.scope['url_route']['kwargs']['game_code']
     self.sessionKey = self.scope['url_route']['kwargs']['sessionKey']
-    self.room = core.core.room_manager.get_room(self.game_code)
 
-    print(bcolors.BLUE + "Now Room List: " +
-          ", ".join(map(str, core.core.room_manager.room_list)) + bcolors.ENDC)
+    self.user = core.core.room_manager.get_user_by_sessionKey(self.sessionKey)
+    self.room = self.user.room
+    self.game = self.room.game_obj
 
-    if self.type == 1:  # 참가자
-      self.username = self.scope['url_route']['kwargs']['username']
-      self.user = User(self.sessionKey, self.username)
-
-      myroom = core.core.room_manager.get_room(self.game_code)
-      if myroom == None:
-        pass  # 사용자가 입력한 방코드에 방이 없는 경우로 예외처리 필요
-      else:
-        print(myroom)
-        myroom.add_user(self.user)
-      print(bcolors.BLUE + "WS: Paticipant connected! ",
-            str(self.room), self.user, bcolors.ENDC)
-    else:
-      print(bcolors.BLUE + "WS: Host connected!", str(self.room), bcolors.ENDC)
-
-    self.room_group_name = 'sgs_%s' % self.game_code
+    self.room_group_name = 'RPS_%s' % self.game_code
 
     # 그룹에 join
     # send 등 과 같은 동기적인 함수를 비동기적으로 사용하기 위해서는 async_to_sync 로 감싸줘야한다.
@@ -68,10 +52,19 @@ class RPSConsumer(WebsocketConsumer):
       if self.type == 0: # 게임시작은 호스트만 가능
         selected_game = text_data_json['game']
         self.room.selected_game = selected_game
+    elif op == "rock":
+      self.game.playRPS_set(self.user, "R")
+    elif op == "paper":
+      self.game.playRPS_set(self.user, "P")
+    elif op == "scissors":
+      self.game.playRPS_set(self.user, "S")
     elif op == "":
       pass
     elif op == "":
       pass
+    elif op == "":
+      pass
+    
 
     # message = text_data_json['message']
     # print(self)
