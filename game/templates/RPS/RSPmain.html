@@ -43,45 +43,41 @@
         }
     </style>
     <script>
-            document.addEventListener("DOMContentLoaded", function (event) {
-            chatSocket.onmessage = function (e) {
-            var data = JSON.parse(e.data);
-            console.log(data);
-            // var message = data['message'];
-            if(data['opcode'] == 'p_refresh'){
-                var participants = data['list'];
-                console.log(participants);
-                // document.getElementById("userList").innerHTML = "";
-                document.querySelector('.userlist').textContent = "";
-                for(var i=0; i<participants.length; i++){
-                    console.log("<li>" + participants[i] +"</li>");
+        var type = {{ type }};
+        var game_code = {{ game_code }};
+        var username = "{{ username }}";
+        var sessionKey = "{{ sessionKey }}";
+        
+        if(type == 0) {
+            var chatSocket = new WebSocket(
+            'ws://' + window.location.host +
+            '/ws/sgs/' + type + '/' + game_code + '/' + sessionKey + '/');
+        }else{
+            var chatSocket = new WebSocket(
+            'ws://' + window.location.host +
+            '/ws/sgs/' + type + '/' + game_code + '/' + username + '/' + sessionKey + '/');
+        };
+
+        document.addEventListener("DOMContentLoaded", function (event) {
+        chatSocket.onmessage = function (e) {
+        var data = JSON.parse(e.data);
+        console.log(data);
+       // var message = data['message'];
+        if(data['opcode'] == 'p_refresh'){
+            var participants = data['list'];
+            console.log(participants);
+             // document.getElementById("userList").innerHTML = "";
+            document.querySelector('.userlist').textContent = "";
+            for(var i=0; i<participants.length; i++){
+                console.log("<li>" + participants[i] +"</li>");
                     // document.getElementById("userList").append("<li>" + participants[i] +"</li>");
-                    document.querySelector('.userlist').append(participants[i]+"  ");
+                document.querySelector('.userlist').append(participants[i]+"  ");
                     // document.getElementById("userList").innerHTML += "<li>" + participants +"</li>";
-                }
-                
-                if(participants.length > 0 ){
-                    // var button = document.
-                    var start = document.getElementsByTagName("button")[0];
-                    start.style.visibility = "visible";                    
-                    
-                }
             }
-            else if(data['opcode'] == 'game_start'){
-                location.href = "/game/" + game_code;
-            }
-            else if(data['opcode'] == 'host_out'){
-                location.href = "/";
-            }
-            else if(data['opcode'] == 'game_start'){
-                location.href = "/game/" + game_code;
-            }
-            
-            
+            }     
          };
         });
         
-
         chatSocket.onclose = function (e) {
             console.error('Chat socket closed unexpectedly');
         };
