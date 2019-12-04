@@ -24,14 +24,15 @@
         function gamestart(){
             var gamename = document.querySelector('input[name="1"]:checked').value;
             var message = 'game_start';
-            alert(gamename);
+            alert(message);
             chatSocket.send(JSON.stringify({
             'opcode': message,
             'gamename': gamename
             }));
 
-            
-            //location.href = "/game/" + game_code;
+            if(gamename == ROCK-SCISSOR-PAPER){
+                location.href = "/game/" + game_code;
+            }
             
         }
         document.addEventListener("DOMContentLoaded", function (event) {
@@ -63,6 +64,9 @@
             }
             else if(data['opcode'] == 'host_out'){
                 location.href = "/";
+            }
+            else if(data['opcode'] == 'game_start'){
+                location.href = "/game/" + game_code;
             }
             
             
