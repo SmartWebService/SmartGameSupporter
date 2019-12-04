@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 import json
 from .consumers import *
 from .bcolor import bcolors
+import core.core
 
 # Create your views here.
 def lobby(request):
@@ -10,9 +11,9 @@ def lobby(request):
 
 
 def new(request):
-    global room_manager
+    # core.core.room_manager
     request.session['type'] = 0
-    request.session['game_code'] = room_manager.new_room(request.session.session_key).room_code
+    request.session['game_code'] = core.core.room_manager.new_room(request.session.session_key).room_code
     print("New room created: ", str(request.session['game_code']))
     return redirect('room/' + str(request.session['game_code']))
 
@@ -29,7 +30,7 @@ def join(request):
 
 
 def room(request, game_code):
-    global room_manager
+    # core.core.room_manager
     if str(game_code) == str(request.session['game_code']):              # 정상 접근인지 확인 (주소인자는 사용자 편의를 위해 표시하지만 잘못된 URL로 접근시 차단)
         if request.session['type'] == 1:                                 # 참가자일때
             print(bcolors.YELLOW + "HTTP: participant", request.session['game_code'], request.session['username'] + bcolors.ENDC)
@@ -41,7 +42,7 @@ def room(request, game_code):
             data['username'] = request.session['username']
             data['sessionKey'] = request.session.session_key
 
-            myroom = room_manager.get_room(int(request.session['game_code']))
+            myroom = core.core.room_manager.get_room(int(request.session['game_code']))
             if myroom == None:
                 print("no room: ", request.session['game_code'])
                 return redirect('lobby')                        # 없는 방에 들어온경우

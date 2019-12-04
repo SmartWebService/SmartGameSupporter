@@ -23,7 +23,7 @@
 
         function gamestart(){
             var gamename = document.querySelector('input[name="1"]:checked').value;
-            var message = 'game_start';
+            var message = 'start_request';
             alert(message);
             chatSocket.send(JSON.stringify({
             'opcode': message,
@@ -127,7 +127,7 @@
             </div>
         </li>
         <li>
-            <input type="radio" name="1" value="ROCK-SCISSOR-PAPER">
+            <input type="radio" name="1" value="RPS">
             <label>ROCK-SCISSOR-PAPER</label>
             <div class="bullet">
                 <div class="line zero"></div>
