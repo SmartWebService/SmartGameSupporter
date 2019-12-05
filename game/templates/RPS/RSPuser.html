@@ -24,32 +24,60 @@
             max-width: 100%;
         }
     </style>
+    <script language = "javascript">
+        var sessionKey = "{{ sessionKey }}";
+        
+        var chatSocket = new WebSocket(
+            'ws://' + window.location.host + '/ws/sgs/RPS/' + sessionKey + '/');
+
+
+        function btnR_click(){
+            chatSocket.send(JSON.stringify({
+            'opcode': 'refresh',
+            'container': 'R'
+            }));
+        }
+        function btnS_click(){
+            chatSocket.send(JSON.stringify({
+            'opcode': 'refresh',
+            'container': 'S'
+            }));
+        }
+        function btnP_click(){
+            chatSocket.send(JSON.stringify({
+            'opcode': 'refresh',
+            'container': 'P'
+            }));
+        }
+
+        document.addEventListener("DOMContentLoaded", function (event) {
+            chatSocket.onmessage = function (e) {
+            var data = JSON.parse(e.data);
+            console.log(data);
+            // var message = data['message'];
+            if(data['opcode'] == 'result'){
+                if(data['win'] == 'true'){
+
+                }
+                else{
+                    document.body.style.backgroundColor = "gray";
+                }
+            };
+        };
+        });
+        
+    </script>
 </head>
 <body>
 <div>
     <button type="button" class="btn" onclick="btnR_click();">
         <img src="{% static 'RPS/rock.png' %}">
-        <script>
-            function btnR_click() {
-                alert("바위를 선택하셨습니다.");
-            }
-        </script>
     </button>
     <button type="button" class="btn" onclick="btnS_click();">
         <img src="{% static 'RPS/scissors.png' %}">
-        <script>
-            function btnS_click() {
-                alert("가위를 선택하셨습니다.");
-            }
-        </script>
     </button>
-    <button type="button" class="btn" onclick="btnP_click()">
+    <button type="button" class="btn" onclick="btnP_click();">
         <img src="{% static 'RPS/paper.png' %}">
-        <script>
-            function btnP_click() {
-                alert("보자기를 선택하셨습니다.");
-            }
-        </script>
     </button>
 </div>
 </body>
