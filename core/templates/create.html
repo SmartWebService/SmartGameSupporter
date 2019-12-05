@@ -24,7 +24,6 @@
         function gamestart(){
             var gamename = document.querySelector('input[name="1"]:checked').value;
             var message = 'start_request';
-            alert(message);
             chatSocket.send(JSON.stringify({
             'opcode': message,
             'gamename': gamename
@@ -34,6 +33,9 @@
                 location.href = "/game/" + game_code;
             }
             else if(gamename == "FIVE_POKER"){
+                location.href = "/game/" + game_code;
+            }
+            else if(gamename == "Bomb"){
                 location.href = "/game/" + game_code;
             }
             
@@ -132,6 +134,20 @@
         <li>
             <input type="radio" name="1" value="RPS">
             <label>ROCK-SCISSOR-PAPER</label>
+            <div class="bullet">
+                <div class="line zero"></div>
+                <div class="line one"></div>
+                <div class="line two"></div>
+                <div class="line three"></div>
+                <div class="line four"></div>
+                <div class="line five"></div>
+                <div class="line six"></div>
+                <div class="line seven"></div>
+            </div>
+        </li>
+        <li>
+            <input type="radio" name="1" value="Bomb">
+            <label>Bomb</label>
             <div class="bullet">
                 <div class="line zero"></div>
                 <div class="line one"></div>

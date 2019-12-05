@@ -30,6 +30,12 @@ def in_game(request, game_code):
             return render(request, 'RPS/RSPmain.html')
         else:
             return render(request, 'RPS/RSPmain.html')
+            
+    elif request_user.room.selected_game == "Bomb":
+        if request_user.isParticipant():
+            return render(request, 'Bomb/Bomb.html', data)
+        else:
+            return render(request, 'Bomb/Bomb.html', data)
 
     # return render(request, 'five-poker/gamescreen.html')
 
