@@ -83,7 +83,8 @@
         console.log(data);
         // var message = data['message'];
         if(data['opcode'] == 'refresh'){
-            var participants = data['list'];
+            var participants = data['participants'];
+            var containers = data['containers'];
             console.log(participants);
            // document.getElementById("userList").innerHTML = "";
             document.querySelector('.userlist').textContent = "";
@@ -94,12 +95,6 @@
                     // document.getElementById("userList").innerHTML += "<li>" + participants +"</li>";
             }
                 
-            if(participants.length > 0 ){
-                // var button = document.
-                var start = document.getElementsByTagName("button")[0];
-                start.style.visibility = "visible";                    
-                    
-            }
         }
         }});
     </script>
