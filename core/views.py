@@ -67,8 +67,6 @@ def room(request, game_code):
     return redirect('lobby')                                # 비정상 접근 -> 홈으로
 
 
-
-
 def index(request):
     return render(request, 'lobby.html', {})
 
@@ -78,8 +76,9 @@ def api_iot(request, device_code):
     if room == None:
         data = dict()
         data["opcode"] = "error"
-        data["des"] = "can not find room"
+        data["des"] = "can not find room or not yet started"
         return JsonResponse(data, json_dumps_params = {'ensure_ascii': True})
-        
-    room.game_obj
-    return redirect('home')
+    else:
+        data = room.game_obj.get_IoT_data()
+        print("IoT send data", data)
+        return JsonResponse(data, json_dumps_params = {'ensure_ascii': True})
