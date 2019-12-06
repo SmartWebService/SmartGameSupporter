@@ -80,6 +80,10 @@ class SGSConsumer(WebsocketConsumer):
           pass
         elif selected_game == "indian-poker":
           pass
+        elif selected_game == "Bomb":
+          if self.room.num_of_participants() > 0: #게임 시작 조건 체크: 참가자가 한명이상
+            self.room.start_game(selected_game)
+            self.game_start()
 
 
 
