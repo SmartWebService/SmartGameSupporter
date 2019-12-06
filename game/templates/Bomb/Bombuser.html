@@ -28,21 +28,20 @@
         var sessionKey = "{{ sessionKey }}";
         
         var chatSocket = new WebSocket(
-            'ws://' + window.location.host + '/ws/sgs/RPS/' + sessionKey + '/');
+            'ws://' + window.location.host + '/ws/sgs/bomb/' + sessionKey + '/');
 
+        function push_bomb() {
+            chatSocket.send(JSON.stringify({
+                'opcode': 'push_bomb'
+            }));
+        }
 
         document.addEventListener("DOMContentLoaded", function (event) {
             chatSocket.onmessage = function (e) {
             var data = JSON.parse(e.data);
             console.log(data);
-            // var message = data['message'];
-            if(data['opcode'] == 'result'){
-                if(data['win'] == 'true'){
-
-                }
-                else{
-                    document.body.style.backgroundColor = "gray";
-                }
+            if(data['opcode'] == 'get_bomb'){
+                //Todo: 폭탄이 참가자 자신에게 왔을때로서 폭탄 요소 보이게 하는 부분 구현 필요
             };
         };
         });

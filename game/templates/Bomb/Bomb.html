@@ -52,28 +52,14 @@
         var sessionKey = "{{ sessionKey }}";
         
         var chatSocket = new WebSocket(
-            'ws://' + window.location.host + '/ws/sgs/RPS/' + sessionKey + '/');
+            'ws://' + window.location.host + '/ws/sgs/bomb/' + sessionKey + '/');
 
 
-        function showImage(){
-            var imgNum = Math.round(Math.random()*2);
-            var objImg = document.getElementById("introImg");
-            var objLogo = document.getElementById("logo");
-            objLogo.textContent = "";
-            objImg.src = imgArray[imgNum];
-            var RPS;
-            if(imgNum == 0){
-                RPS = 'R';
-            }
-            if(imgNum == 1){
-                RPS = 'P';
-            }
-            if(imgNum == 2){
-                RPS = 'S';
-            }
+        function start(){
+            
             chatSocket.send(JSON.stringify({
-            'opcode': 'game_end',
-            'container': RPS
+            'opcode': 'start',
+            'IoT_code': 123456 //Todo: input박스에서 값을 가져오게 수정
             }));
         }
 
@@ -81,19 +67,23 @@
         chatSocket.onmessage = function (e) {
         var data = JSON.parse(e.data);
         console.log(data);
-        // var message = data['message'];
         if(data['opcode'] == 'refresh'){
             var participants = data['participants'];
-            var containers = data['containers'];
+            var index = data['bomb_user_index'];
             console.log(participants);
-           // document.getElementById("userList").innerHTML = "";
             document.querySelector('.userlist').textContent = "";
             for(var i=0; i<participants.length; i++){
-                console.log("<li>" + participants[i] +"</li>");
-                    // document.getElementById("userList").append("<li>" + participants[i] +"</li>");
-                document.querySelector('.userlist').append(participants[i]+"  " +containers[i] + "  ");
-                    // document.getElementById("userList").innerHTML += "<li>" + participants +"</li>";
+                document.querySelector('.userlist').append(participants[i]+"  ");
+                if(i==index){
+                    // Todo: 폭탄가진유저로 닉네임 옆에 폭탄 요소 출력
+                }
             }
+                
+        }
+        else if(data['opcode'] == 'end'){
+            var nickname = data['nickname'];
+            console.log(nickname);
+            // Todo: 걸린사람의 닉네임을 표출
                 
         }
         }});
@@ -116,13 +106,14 @@
     </div>
 </div>
 <div class="random">
+    <input type="text" id="IoT_code" name="IoT_code" placeholder="IoT Device Code" minlength="6" maxlength="6" required>
     <P id = "logo" style="font-family: 'Bebas Neue'">
         "Bomb"
     </P>
     <img id = "introImg" border="0" src="{% static 'Bomb/bomb.png' %}" >
 </div>
 <div class="wrap" align="right">
-    <button class="button" style="margin: 4% 18% 0 0;" onclick="showImage()">RETRY</button>
+    <button class="button" style="margin: 4% 18% 0 0;" onclick="start()">시작</button>
 </div>
 
 </body>
