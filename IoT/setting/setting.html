@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ko">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        {STYLE}
+        {SCRIPT}
+		<title>Smart Gmae Supporter Wi-Fi Setting</title>
+	</head>
+
+	<div class="wrapper en">
+      {LOGO}
+		<h1>Smart Gmae Supporter Wi-Fi Setting</h1>
+		<div class="mainInfo">
+			<div class="mainContent">
+				<form method="get" action="/save">
+					<div class="wifi">
+						<label for="checkbox"
+							><b name="wifiStatus">IoT Device O/F</b></label
+						>
+						<label class="switch">
+							<input
+								type="checkbox"
+								onclick="toggleOnOff()"
+								id="wifiTogggle"
+							/>
+							<span class="slider round"></span>
+						</label>
+						<input
+							name="is_offline_mode"
+							style="display:none"
+							value="Offline"
+						/>
+						<br /><br />
+					</div>
+					<div class="network_setting">
+						<p><b>Wi-Fi</b></p>
+						<label>SSID: </label>
+						<select name="ssid">
+							{wifiSsidList}
+						</select>
+						<br />
+						Password:
+						<input
+							name="pass"
+							id="pass"
+							length="64"
+							type="password"
+							value=""
+							placeholder=""
+						/>
+						<br /><br />
+						<p>
+							<b>IoT_device_code</b><br />
+							code:
+							<input
+								name="IoT_code"
+								id="IoT_code"
+								length="6"
+								type="text"
+								minlength="6"
+								maxlength="6"
+								value=""
+								placeholder=""
+							/>
+						</p>
+					</div>
+					<br /><br /><br />
+                    <label for="submitBtn"><a class="btn">저장</a></label>
+                        <input
+                            id="submitBtn"
+                            type="submit"
+                            value="Submit"
+                            style="all:unset; display:none;"
+                        />
+				</form>
+			</div>
+		</div>
+	</div>
+</html>
