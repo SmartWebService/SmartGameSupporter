@@ -3,8 +3,8 @@ from Poker import *
 
 
 class Player:
-    def __init__(self, id):
-        self.id = id
+    def __init__(self, user):
+        self.user = user
         self.cards = []
         self.chips = 0
         self.bet_chips = 0
@@ -117,78 +117,30 @@ class CardDump:
         return playercards
 
 
-
-'''
-def one_game(p1, p2, p3, p4):
-    carddump = CardDump()
-    endgame = False
-    while not endgame:
-
-        all_basic_bet(p1, p2, p3, p4)
-
-        all_give_hand(carddump, p1, p2, p3, p4)
-
-        print("p1's cards : ", end='')
-        p1.view_cards()
-        print("p2's cards : ", end='')
-        p2.view_cards()
-        print("p3's cards : ", end='')
-        p3.view_cards()
-        print("p4's cards : ", end='')
-        p4.view_cards()
-
-        bet_func(p1, p2, p3, p4)
-
-        PL = [p1, p2, p3, p4]
-        a = [[],[]]
-        for player in PL:
-            if player.is_die():
-                continue
-            else:
-                a[0].append(player.change_point())
-                a[1].append(player)
-        if len(a[0]) == 1:
-            winner = a[1][0]
-        else:
-            winnerp = max(a[0])
-            winner = a[1][a[0].index(winnerp)]
-
-        winner.view_cards()
-        print(winner.id, "is win!!")
-
-        for player in PL:
-            winner.add_chip(player.bet_chips)
-            player.clear()
-        print("p1의 현재 칩 : ", p1.get_chip())
-        print("p2의 현재 칩 : ",p2.get_chip())
-        print("p3의 현재 칩 : ",p3.get_chip())
-        print("p4의 현재 칩 : ",p4.get_chip())
-        carddump.clear()
-        if p1.get_chip() == 0 or p2.get_chip() == 0 or p3.get_chip() == 0 or p4.get_chip() == 0:
-            endgame = True
-'''
-
-
 class PokerGame:
-    def __init__(self, p1: Player, p2: Player, p3: Player, p4: Player):
+    def __init__(self, host, participants):
         self.nowbet = 1
         self.raisecount = 0
         self.callcount = 0
         self.diecount = 0
         self.allincount = 0
-        self.p1: Player = p1
-        self.p2: Player = p2
-        self.p3: Player = p3
-        self.p4: Player = p4
-        self.all_player = [self.p1, self.p2, self.p3, self.p4]
+        self.players = []
+        self.host = host
+        self.participatns = participants
+        self.participants_to_players(participants)
+        self.reload_player()
         self.carddump = CardDump()
-        self.nowplayer: Player = p1
+        self.nowplayer = self.players[0]
+
+    def participants_to_players(participants):
+        for player in participants:
+            self.players.append(Player(player))
 
     def reload_player(self):
-        self.p1.set_players(self.p4, self.p2)
-        self.p2.set_players(self.p1, self.p3)
-        self.p3.set_players(self.p2, self.p4)
-        self.p4.set_players(self.p3, self.p1)
+        self.players[0].set_players(self.players[3], self.players[1])
+        self.players[1].set_players(self.players[0], self.players[2])
+        self.players[2].set_players(self.players[1], self.players[3])
+        self.players[3].set_players(self.players[2], self.players[0])
 
     def get_nowplayer(self):
         return self.nowplayer
@@ -197,11 +149,11 @@ class PokerGame:
         self.nowplayer = self.nowplayer.afterplayer
 
     def all_basic_bet(self):
-       for player in self.all_player:
+       for player in self.players:
            player.basic_bet()
 
     def all_give_hand(self):
-        for player in self.all_player:
+        for player in self.players:
             self.give_hand(player)
 
     def give_hand(self, player):
@@ -218,7 +170,7 @@ class PokerGame:
 
     def give_winner_chips(self, winner):
         if winner.get_chip() == 0:
-            for player in self.all_player:
+            for player in self.players:
                 remainder = player.get_bet_chips() - winner.get_bet_chips()
                 if remainder > 0:
                     winner.add_chip(winner.get_bet_chips())
@@ -229,7 +181,7 @@ class PokerGame:
             winner.add_chip(self.get_all_bet())
 
     def clear_game(self):
-        for player in self.all_player:
+        for player in self.players:
             player.clear()
         self.carddump.clear()
         self.reload_player()
@@ -270,7 +222,7 @@ class PokerGame:
         else:
             return True
 
-    def check_break(self, player):
+    def check_break(self):
         if self.diecount >= 3 or self.diecount + self.callcount + self.allincount >= 4:
             return True
         else:
@@ -278,7 +230,7 @@ class PokerGame:
 
     def check_winner(self):
         a = [[], []]
-        for player in self.all_player:
+        for player in self.players:
             if player.is_die():
                 continue
             else:
@@ -292,7 +244,7 @@ class PokerGame:
         return winner
 
     def check_endgame(self):
-        for player in self.all_player:
+        for player in self.players:
             if player.get_chip() == 0:
                 return True
         return False
@@ -411,7 +363,7 @@ def onebetting(game:PokerGame):
             else:
                 game.call(NP)
 
-        if game.check_break(NP):
+        if game.check_break():
             break
 
         game.next_player()
@@ -494,7 +446,7 @@ if __name__ == '__main__':
 
         game.next_player()'''
 
-    for player in game.all_player:
+    for player in game.players:
         if not player.is_die():
             index = []
             print("player {}, which card do you want to change? \n(nothing is -1, your card is {})".format(player.id, player.view_cards(False)))
@@ -522,7 +474,7 @@ if __name__ == '__main__':
 
     game.give_winner_chips(winner)
 
-    for player in game.all_player:
+    for player in game.players:
         print("player {}'s card : {}\n{}, remain chips : {}".format(player.id, player.view_cards(),
                                                                    player.get_type(), player.get_chip()))
         print()

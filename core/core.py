@@ -89,7 +89,7 @@ class Room:
         if selected_game == "RPS":
             self.game_obj = game.GameLogic.RPS.RPS(self.room_host, self.room_participants)
         elif selected_game == "five-poker":
-            pass
+            self.game_obj = game.GameLogic.bet.PokerGame(self.room_host, self.room_participants)
         
 
 

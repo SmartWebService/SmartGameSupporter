@@ -147,3 +147,156 @@ class RPSConsumer(WebsocketConsumer):
     self.send(text_data=json.dumps({
         'opcode': 'host_out'
     }))
+    
+    
+    
+    
+class FivePokerConsumer(WebsocketConsumer):
+  def connect(self):
+    print(core.core.room_manager)
+    # core.core.room_manager
+
+    self.sessionKey = self.scope['url_route']['kwargs']['sessionKey']
+
+    self.user = core.core.room_manager.get_user_by_sessionKey(self.sessionKey)
+    self.room = self.user.room
+    self.game = self.room.game_obj
+
+    self.room_group_name = 'FP_%s' % self.room.room_code
+
+    # 그룹에 join
+    # send 등 과 같은 동기적인 함수를 비동기적으로 사용하기 위해서는 async_to_sync 로 감싸줘야한다.
+    async_to_sync(self.channel_layer.group_add)(
+        self.room_group_name,
+        self.channel_name
+    )
+    # WebSocket 연결
+    self.accept()
+    self.participant_refresh()
+
+  def disconnect(self, close_code):
+    self.host_out
+    print("deleted")
+    # 그룹에서 Leave
+    async_to_sync(self.channel_layer.group_discard)(
+        self.room_group_name,
+        self.channel_name
+    )
+
+  # WebSocket 에게 메세지 receive
+  def receive(self, text_data):
+    text_data_json = json.loads(text_data)
+    op = text_data_json['opcode']
+    print("receiced ", text_data_json)
+
+    if op == "game_end":
+      if not self.user.isParticipant(): # 게임은 호스트만 가능
+        self.game.decision(text_data_json['container'])
+        self.result(text_data_json['container'])
+    elif op == "refresh":
+      container = text_data_json['container']
+
+    if op == "call":
+      if self.user == self.game.get_nowplayer():
+        self.game.call(self.user)
+    elif op == "raise":
+      if self.user == self.game.get_nowplayer():
+        self.game.rais(self.user, self.game.nowbet + 1)
+    elif op == "die":
+      if self.user == self.game.get_nowplayer():
+        self.game.die(self.user) 
+    
+    if self.game.check_break():
+      self.game_end()
+    
+  def game_end(self):
+    #room group 에게 메세지 send
+    async_to_sync(self.channel_layer.group_send)(
+       self.room_group_name,
+       {
+          'type': 'game_end_send'
+       }
+    )
+  
+  def game_end_send(self, event):
+    winner = self.game.check_winner()
+    self.game.give_winner_chips(winner)
+    self.game.clear_game()
+    # WebSocket 에게 메세지 전송
+    self.send(text_data=json.dumps({
+        'opcode': 'game_end',
+        'winner': str(winner.user)
+    }))
+  
+  def participant_card(self, container):
+    # room group 에게 메세지 send
+    async_to_sync(self.channel_layer.group_send)(
+        self.room_group_name,
+        {
+            'type': 'participant_card_send',
+            'container': container
+        }
+    )
+  
+  def participant_card_send(event):
+    container = event['container']
+    cards = []
+    for player in self.game.players:
+      if player.user == self.cuser:
+        cards = player.get_cards
+
+        self.send(text_data=json.dumps({
+          'opcode' = 'participant_card'
+          'card_list' = cards
+        }))
+    
+  def current_money(self):
+    #room group 에게 메세지 send
+    async_to_sync(self.channel_layer.group_send)(
+        self.room_group_name,
+        {
+            'type': 'current_money_send'
+        }
+    )
+
+  def current_money_send(self, event):
+    if not self.user.isParticipant():
+      money = self.game.get_all_bet()
+      print("bet : ",money)
+      #WebSocket 에게 메세지 전송
+      self.send(text_data=json.dumps({
+          'opcode': 'current_money'
+          'money': money
+      }))
+
+
+  def participant_refresh(self):
+    # room group 에게 메세지 send
+    async_to_sync(self.channel_layer.group_send)(
+        self.room_group_name,
+        {
+            'type': 'participant_refresh_send'
+        }
+    )
+
+  def participant_refresh_send(self, event):
+    participant_list = self.room.room_participants
+    print("log", list(map(str, participant_list)))
+    # WebSocket 에게 메세지 전송
+    self.send(text_data=json.dumps({
+        'opcode': 'p_refresh',
+        'list': list(map(str, participant_list))
+    }))
+
+  def host_out(self):
+    async_to_sync(self.channel_layer.group_send)(
+        self.room_group_name,
+        {
+            'type': 'host_out_send'
+        }
+    )
+
+  def host_out_send(self, event):
+    self.send(text_data=json.dumps({
+        'opcode': 'host_out'
+    }))
