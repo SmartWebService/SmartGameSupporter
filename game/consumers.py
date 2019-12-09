@@ -204,7 +204,7 @@ class FivePokerConsumer(WebsocketConsumer):
         self.game.rais(self.user, self.game.nowbet + 1)
     elif op == "die":
       if self.user == self.game.get_nowplayer():
-        self.game.die(self.user) 
+        self.game.die(self.user)
     
     if self.game.check_break():
       self.game_end()
@@ -219,6 +219,7 @@ class FivePokerConsumer(WebsocketConsumer):
     )
   
   def game_end_send(self, event):
+    if
     winner = self.game.check_winner()
     self.game.give_winner_chips(winner)
     self.game.clear_game()
@@ -242,7 +243,7 @@ class FivePokerConsumer(WebsocketConsumer):
     container = event['container']
     cards = []
     for player in self.game.players:
-      if player.user == self.cuser:
+      if player.user == self.user:
         cards = player.get_cards
 
         self.send(text_data=json.dumps({
