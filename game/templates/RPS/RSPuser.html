@@ -36,18 +36,24 @@
             'opcode': 'refresh',
             'container': 'R'
             }));
+            var wintext = document.getElementsByTagName('p')[0];
+            wintext.innerText = "";
         }
         function btnS_click(){
             chatSocket.send(JSON.stringify({
             'opcode': 'refresh',
             'container': 'S'
             }));
+            var wintext = document.getElementsByTagName('p')[0];
+            wintext.innerText = "";
         }
         function btnP_click(){
             chatSocket.send(JSON.stringify({
             'opcode': 'refresh',
             'container': 'P'
             }));
+            var wintext = document.getElementsByTagName('p')[0];
+            wintext.innerText = "";
         }
 
         document.addEventListener("DOMContentLoaded", function (event) {
@@ -57,10 +63,20 @@
             // var message = data['message'];
             if(data['opcode'] == 'result'){
                 if(data['win'] == 'true'){
-
+                    var wintext = document.getElementsByTagName('p')[0];
+                    wintext.innerText = "WIN";
                 }
                 else{
                     document.body.style.backgroundColor = "gray";
+                    var buttonlist = document.getElementsByTagName('div');
+                    buttonlist[0].parentNode.removeChild(buttonlist[0]);
+                    var img = document.createElement('img');
+                    img.style.position ="absolute";
+                    img.style.top = "10%";
+                    img.style.left = "25%";
+                    img
+                    img.src = "{% static 'RPS/lose.png' %}";
+                    document.body.appendChild(img);
                 }
             };
         };
@@ -79,6 +95,7 @@
     <button type="button" class="btn" onclick="btnP_click();">
         <img src="{% static 'RPS/paper.png' %}">
     </button>
+    <p style="font-size: 10vh; position: absolute; top: 70%; left:45%"></p>
 </div>
 </body>
 </html>
