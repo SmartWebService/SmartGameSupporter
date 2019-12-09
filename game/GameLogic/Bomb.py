@@ -1,11 +1,14 @@
 from random import *
+import time
 import core.core
 
 class Bomb:
+    hostSocket = None
     room = None                     # 게임을 하고있는 방 객체
     host = None                     # 게임을 하고있는 호스트 유저 객체
     participants = []               # 게임을 하고있는 참가자들의 유저 객체를 가진 리스트
     current_bomb_player = None      # 게임진행중에 폭탄을 현재 가지고 있는 유저객체
+    start_time = None               # 게임 시작 시간
     bomb_time = None                # 게임시작시 설정되는 폭탄 랜덤 시간
     beep = False
 
@@ -21,7 +24,7 @@ class Bomb:
         print(self.participants)
 
     def get_timer(self):
-        return 1
+        return int(self.bomb_time + self.start_time - time.time())
     
     def get_beep(self):
         b = self.beep
@@ -34,6 +37,7 @@ class Bomb:
         data['room_code'] = self.room.room_code
         data['timer'] = self.get_timer()
         data['beep'] = self.get_beep()
+        self.check_bomb()
         return data
 
     def start_game(self, IoT_code):
@@ -41,8 +45,10 @@ class Bomb:
         self.bomb_time = randint(10, 20)
         first_i = randint(0, len(self.participants)-1)
         self.current_bomb_player = self.participants[first_i]
+        self.start_time = time.time()
 
     def is_user_in_game(self, user):
+        self.check_bomb()
         for i in self.participants:
             if i == user:
                 return True
@@ -53,8 +59,10 @@ class Bomb:
             random_i = randint(0, len(self.participants)-1)
             self.current_bomb_player = self.participants[random_i]
             self.beep = True
+        self.check_bomb()
 
     def get_bomb(self, user):
+        self.check_bomb()
         if self.current_bomb_player == user:
             return True
         else:
@@ -70,5 +78,9 @@ class Bomb:
             if this_user == self.current_bomb_player:
                 index = i
 
+        self.check_bomb()
         return p, index
         
+    def check_bomb(self):
+        if self.get_timer() <= 0:
+            self.hostSocket.bomb_bomb()

@@ -99,24 +99,25 @@ class RPSConsumer(WebsocketConsumer):
     async_to_sync(self.channel_layer.group_send)(
         self.room_group_name,
         {
-            'type': 'result_send',
-            'container': container
+            'type': 'result_send'
         }
     )
 
   def result_send(self, event):
-    container = event['container']
-    result = ""
-    if self.game.is_user_in_game(self.user):
-      result = "true"
-    else:
-      result = "false"
+    if self.user.isParticipant():
+      # container = event['container']
+      result = ""
+      if self.game.is_user_in_game(self.user):
+        result = "true"
+      else:
+        result = "false"
+      print(result)
 
-    # WebSocket 에게 메세지 전송
-    self.send(text_data=json.dumps({
-        'opcode': 'result',
-        'win': result,
-    }))
+      # WebSocket 에게 메세지 전송
+      self.send(text_data=json.dumps({
+          'opcode': 'result',
+          'win': result
+      }))
 
 
   def participant_refresh(self):
@@ -170,6 +171,9 @@ class BombConsumer(WebsocketConsumer):
     self.game = self.room.game_obj
 
     self.room_group_name = 'bomb_%s' % self.room.room_code
+
+    if not self.user.isParticipant():
+      self.game.hostSocket = self
 
     # 그룹에 join
     # send 등 과 같은 동기적인 함수를 비동기적으로 사용하기 위해서는 async_to_sync 로 감싸줘야한다.
@@ -250,6 +254,7 @@ class BombConsumer(WebsocketConsumer):
 
   def get_bomb_send(self, event):
     if self.game.get_bomb(self.user):
+      print("def get_bomb_send(self, event):")
       # WebSocket 에게 메세지 전송
       self.send(text_data=json.dumps({
           'opcode': 'get_bomb'
@@ -309,4 +314,19 @@ class BombConsumer(WebsocketConsumer):
   def host_out_send(self, event):
     self.send(text_data=json.dumps({
         'opcode': 'host_out'
+    }))
+
+  def bomb_bomb(self):
+    # room group 에게 메세지 send
+    async_to_sync(self.channel_layer.group_send)(
+        self.room_group_name,
+        {
+            'type': 'bomb_bomb_send'
+        }
+    )
+
+  def bomb_bomb_send(self, event):
+    # WebSocket 에게 메세지 전송
+    self.send(text_data=json.dumps({
+        'opcode': 'bomb_bomb'
     }))
