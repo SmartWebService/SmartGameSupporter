@@ -1,6 +1,7 @@
 from random import *
 # from  game.GameLogic import *
 import game.GameLogic.RPS
+import game.GameLogic.Bomb
 
 class RoomManager:
     room_list = []
@@ -44,9 +45,9 @@ class RoomManager:
                 return i
         return None
 
-    def get_room_by_iot_code(self, iot_code):
+    def get_room_by_iot_code(self, IoT_code):
         for i in self.room_list:
-            if i.iot_code == iot_code:
+            if i.IoT_code == IoT_code:
                 return i
         return None
 
@@ -57,7 +58,7 @@ class Room:
     game_obj = None             # 게임객체
     room_host = None            # 호스트의 User객체
     room_participants = []      # 유저객체들의 리스트
-    iot_code = None             # IoT 디바이스 코드
+    IoT_code = None             # IoT 디바이스 코드
 
 
     def __init__(self, room_code, room_host=None):
@@ -89,10 +90,9 @@ class Room:
         if selected_game == "RPS":
             self.game_obj = game.GameLogic.RPS.RPS(self.room_host, self.room_participants)
         elif selected_game == "five-poker":
-            self.game_obj = game.GameLogic.bet.PokerGame(self.room_host, self.room_participants)
-            self.game_obj.all_give_hand()
-        
-        
+            pass
+        elif selected_game == "Bomb":
+            self.game_obj = game.GameLogic.Bomb.Bomb(self.room_host, self.room_participants)
 
 
 class User:

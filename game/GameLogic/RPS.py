@@ -71,6 +71,7 @@ class RPS:
             elif player.RPS_container == 'S':
                 S_players.append(player)
         
+        print("host container", host_container)
         if host_container == "R":
             self.players = P_players
         elif host_container == "P":
@@ -79,9 +80,29 @@ class RPS:
             self.players = R_players
 
         self.participants = []
+
+        print("R_players")
+        for i in R_players:
+            print(i)
+
+        print("P_players")
+        for i in P_players:
+            print(i)
+
+        print("S_players")
+        for i in S_players:
+            print(i)
+        
+        print("here")
+        for i in self.players:
+            print(i)
+        
+        
+
+
         
         for i in self.players:
-            self.participants.append(i)
+            self.participants.append(i.user)
             
         return R_players, P_players, S_players
             

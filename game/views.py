@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 import core.core
 
 # Create your views here.
@@ -21,22 +21,21 @@ def in_game(request, game_code):
 
     elif request_user.room.selected_game == "five-poker":
         if request_user.isParticipant():
-            return render(request, 'five-poker/gamescreen.html')
+            return render(request, 'five-poker/gamescreen.html', data)
         else:
-            return render(request, 'five-poker/ingame.html')
+            return render(request, 'five-poker/ingame.html', data)
 
     elif request_user.room.selected_game == "indian-poker":
         if request_user.isParticipant():
-            return render(request, 'RPS/RSPmain.html')
+            return render(request, 'RPS/RSPmain.html', data)
         else:
-            return render(request, 'RPS/RSPmain.html')
+            return render(request, 'RPS/RSPmain.html', data)
             
     elif request_user.room.selected_game == "Bomb":
         if request_user.isParticipant():
-            return render(request, 'Bomb/Bomb.html', data)
+            return render(request, 'Bomb/Bombuser.html', data)
         else:
             return render(request, 'Bomb/Bomb.html', data)
 
-    # return render(request, 'five-poker/gamescreen.html')
-
-    return render(request, 'RPS/RSPresult.html')
+    else:
+        return redirect('lobby')
