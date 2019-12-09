@@ -7,22 +7,27 @@
 #include <WebServer.h>
 #include <DNSServer.h>
 #include <ArduinoJson.h>
+#include <Servo.h>
 
 const String IoT_device_code = "123456";
+static const int servoPin = 13;
 
 const String API_SERVER_PROTOCALL = "http://";
-const String API_SERVER_URL = "172.30.1.56:8080";
+const String API_SERVER_URL = "172.30.1.39:8080";
 const String API_SERVER_RESTAPI_URI = "/api/iot/";
 const String ssid = "2G_Twosome_P";
 const String password = "Twosome1016";
 long last_connected = 0;
-DynamicJsonDocument locale_json(5000);
 WiFiMulti wiFiMulti;
+Servo servo;
 
 void setup()
 {
     Wire.begin();
     Serial.begin(115200);
+    servo.attach(servoPin);
+    servo.write(0);
+
     int count = 0;
     while (count < 20)
     {
@@ -71,6 +76,11 @@ void loop()
         else
         {
             String opcode = payload_json["opcode"];
+
+            if(payload_json["timer"] == 0){
+                Serial.println("Bombed!");
+//                servo.write(180);
+            }
 
             Serial.println("opcode:" + opcode);
             Serial.println("");
