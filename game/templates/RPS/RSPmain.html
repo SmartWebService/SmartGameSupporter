@@ -52,17 +52,17 @@
         var chatSocket = new WebSocket(
             'ws://' + window.location.host + '/ws/sgs/RPS/' + sessionKey + '/');
         
-        document.addEventListener("DOMContentLoaded", function (event) {
+        document.addEventListener("DOMContentLoaded", function (e) {
+            var data = JSON.parse(e.data);
         chatSocket.onmessage = function (e) {
-        var data = JSON.parse(e.data);
         console.log(data);
        // var message = data['message'];
-        if(data['opcode'] == 'p_refresh'){
-            var participants = data['list'];
+        if(data['opcode'] == 'p_refresh' || data['opcode'] == 'refresh'  ){
+            var participants = data['participants'];
             console.log(participants);
              // document.getElementById("userList").innerHTML = "";
             document.querySelector('.userlist').textContent = "";
-            for(var i=0; i<participants.length; i++){
+            for(var i=0; i< participants.length; i++){
                 console.log("<li>" + participants[i] +"</li>");
                     // document.getElementById("userList").append("<li>" + participants[i] +"</li>");
                 document.querySelector('.userlist').append(participants[i]+"  ");
