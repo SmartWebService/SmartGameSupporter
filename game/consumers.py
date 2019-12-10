@@ -55,6 +55,7 @@ class RPSConsumer(WebsocketConsumer):
       if not self.user.isParticipant(): # 게임은 호스트만 가능
         self.game.decision(text_data_json['container'])
         self.result(text_data_json['container'])
+        self.refresh()
     elif op == "refresh":
       container = text_data_json['container']
 
