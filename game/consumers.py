@@ -148,6 +148,7 @@ class RPSConsumer(WebsocketConsumer):
     )
 
   def host_out_send(self, event):
+    self.user.delete()
     self.send(text_data=json.dumps({
         'opcode': 'host_out'
     }))

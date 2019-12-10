@@ -53,7 +53,7 @@
         var chatSocket = new WebSocket(
             'ws://' + window.location.host + '/ws/sgs/bomb/' + sessionKey + '/');
 
-
+        var now = "";
         function start(){
             
             chatSocket.send(JSON.stringify({
@@ -71,6 +71,7 @@
             var participants = data['participants'];
             var index = data['bomb_user_index'];
             var user = participants[index];
+            now = participants[index];
             console.log(participants);
             document.querySelector('.userlist').textContent = "";
 
@@ -92,13 +93,11 @@
                 
         
         }
-        else if(data['opcode'] == 'end'){
-            var nickname = data['nickname'];
-            console.log(nickname);
+        else if(data['opcode'] == 'bomb_bomb'){
             var img = document.getElementsByTagName('img')[0];
             img.src = "{% static 'Bomb/explode.png' %}";
             var usertext = document.getElementsByTagName('p')[0];
-            usertext.textContent = user;
+            usertext.textContent = now;
                 
         }
         }});

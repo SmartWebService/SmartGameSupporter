@@ -34,6 +34,7 @@ class Bomb:
 
     def get_IoT_data(self):
         data = dict()
+        data['opcode'] = "gaming"
         data['room_code'] = self.room.room_code
         data['timer'] = self.get_timer()
         data['beep'] = self.get_beep()
@@ -55,32 +56,38 @@ class Bomb:
         return False
 
     def push_bomb(self, user):
-        while self.current_bomb_player == user:        # push_bomb요청한 유저가 권한이 있는지 확인(폭탄을 가지고있는 유저만 가능) 또한 랜덤픽했을때 또 자신에게 왔을때 다시 배정을 위해 if대신 while사용
-            random_i = randint(0, len(self.participants)-1)
-            self.current_bomb_player = self.participants[random_i]
-            self.beep = True
-        self.check_bomb()
+        if not self.is_end():
+            while self.current_bomb_player == user:        # push_bomb요청한 유저가 권한이 있는지 확인(폭탄을 가지고있는 유저만 가능) 또한 랜덤픽했을때 또 자신에게 왔을때 다시 배정을 위해 if대신 while사용
+                random_i = randint(0, len(self.participants)-1)
+                self.current_bomb_player = self.participants[random_i]
+                self.beep = True
+            self.check_bomb()
 
     def get_bomb(self, user):
-        self.check_bomb()
-        if self.current_bomb_player == user:
-            return True
-        else:
-            return False
+        if not self.is_end():
+            self.check_bomb()
+            if self.current_bomb_player == user:
+                return True
+            else:
+                return False
     
     def refresh(self):
-        p = []
-        index = 0
+        if not self.is_end():
+            p = []
+            index = 0
 
-        for i in range(len(self.participants)):
-            this_user = self.participants[i]
-            p.append(this_user.nickname)
-            if this_user == self.current_bomb_player:
-                index = i
+            for i in range(len(self.participants)):
+                this_user = self.participants[i]
+                p.append(this_user.nickname)
+                if this_user == self.current_bomb_player:
+                    index = i
 
-        self.check_bomb()
-        return p, index
+            self.check_bomb()
+            return p, index
         
     def check_bomb(self):
         if self.get_timer() <= 0:
             self.hostSocket.bomb_bomb()
+    
+    def is_end(self):
+        return self.get_timer() <= 0

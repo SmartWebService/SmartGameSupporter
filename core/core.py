@@ -64,6 +64,7 @@ class Room:
     def __init__(self, room_code, room_host=None):
         self.room_code = room_code
         self.room_host = room_host
+        self.room_participants = []
 
     def __str__(self):
         return str(self.room_code) + ",".join(list(map(str, self.room_participants)))
