@@ -76,8 +76,11 @@ class SGSConsumer(WebsocketConsumer):
           if self.room.num_of_participants() > 0: #참가자가 한명이상
             self.room.start_game(selected_game)
             self.game_start()
-        elif selected_game == "five-poker":
-          pass
+        elif selected_game == "FIVE_POKER":
+          print(self.room.num_of_participants())
+          if self.room.num_of_participants() > 0: #참가자가 한명이상
+            self.room.start_game(selected_game)
+            self.game_start()
         elif selected_game == "indian-poker":
           pass
         elif selected_game == "Bomb":

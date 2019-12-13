@@ -13,10 +13,10 @@ const String IoT_device_code = "123456";
 static const int servoPin = 13;
 
 const String API_SERVER_PROTOCALL = "http://";
-const String API_SERVER_URL = "172.30.1.39:8080";
+const String API_SERVER_URL = "192.168.33.70";
 const String API_SERVER_RESTAPI_URI = "/api/iot/";
-const String ssid = "2G_Twosome_P";
-const String password = "Twosome1016";
+const String ssid = "KMU_SW";
+const String password = "kookminsw";
 long last_connected = 0;
 WiFiMulti wiFiMulti;
 Servo servo;
@@ -76,11 +76,17 @@ void loop()
         else
         {
             String opcode = payload_json["opcode"];
+            int timer = payload_json["timer"];
+            Serial.println(timer);
 
-            if(payload_json["timer"] == 0){
-                Serial.println("Bombed!");
-//                servo.write(180);
+            if(opcode.equals("gaming")){
+              if(timer <= 0){
+                  Serial.println("Bombed!");
+                  servo.write(180);
+                  delay(100000000000000);
+              }
             }
+            
 
             Serial.println("opcode:" + opcode);
             Serial.println("");

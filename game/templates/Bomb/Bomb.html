@@ -96,6 +96,8 @@
         else if(data['opcode'] == 'bomb_bomb'){
             var img = document.getElementsByTagName('img')[0];
             img.src = "{% static 'Bomb/explode.png' %}";
+            img = document.getElementsByTagName('img')[1];
+            img.src = "{% static 'Bomb/explode.png' %}";
             var usertext = document.getElementsByTagName('p')[0];
             usertext.textContent = now;
                 

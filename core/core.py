@@ -2,6 +2,7 @@ from random import *
 # from  game.GameLogic import *
 import game.GameLogic.RPS
 import game.GameLogic.Bomb
+# import game.GameLogic.bet
 
 class RoomManager:
     room_list = []
@@ -90,8 +91,9 @@ class Room:
         self.selected_game = selected_game
         if selected_game == "RPS":
             self.game_obj = game.GameLogic.RPS.RPS(self.room_host, self.room_participants)
-        elif selected_game == "five-poker":
+        elif selected_game == "FIVE_POKER":
             pass
+            # self.game_obj = game.GameLogic.bet.PokerGame(self.room_participants[0], self.room_participants[1], self.room_participants[2], self.room_participants[3])
         elif selected_game == "Bomb":
             self.game_obj = game.GameLogic.Bomb.Bomb(self.room_host, self.room_participants)
 

@@ -154,7 +154,7 @@ class PokerGame:
 
     def all_give_hand(self):
         for player in self.players:
-            self.give_hand(player)
+            self.all_give_hand(player)
 
     def give_hand(self, player):
         playercards = self.carddump.draw(5)

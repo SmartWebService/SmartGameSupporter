@@ -19,7 +19,7 @@ def in_game(request, game_code):
         else:
             return render(request, 'RPS/RSPhost.html', data)
 
-    elif request_user.room.selected_game == "five-poker":
+    elif request_user.room.selected_game == "FIVE_POKER":
         if request_user.isParticipant():
             return render(request, 'five-poker/gamescreen.html', data)
         else:

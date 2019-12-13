@@ -72,18 +72,17 @@ class Bomb:
                 return False
     
     def refresh(self):
-        if not self.is_end():
-            p = []
-            index = 0
+        p = []
+        index = 0
 
-            for i in range(len(self.participants)):
-                this_user = self.participants[i]
-                p.append(this_user.nickname)
-                if this_user == self.current_bomb_player:
-                    index = i
+        for i in range(len(self.participants)):
+            this_user = self.participants[i]
+            p.append(this_user.nickname)
+            if this_user == self.current_bomb_player:
+                index = i
 
-            self.check_bomb()
-            return p, index
+        self.check_bomb()
+        return p, index
         
     def check_bomb(self):
         if self.get_timer() <= 0:
