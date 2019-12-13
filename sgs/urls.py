@@ -25,6 +25,7 @@ urlpatterns = [
     path('new', core.views.new, name='new'),
     path('join', core.views.join, name='join'),
     path('room/<int:game_code>', core.views.room, name='room'),
-    path('game/<int:game_code>', core.views.in_game, name='game'),
+    path('game/<int:game_code>', game.views.in_game, name='game'),
+    path('api/iot/<int:device_code>', core.views.api_iot, name='iot'),
     url(r'^sgs/', include('core.urls')),
 ]

@@ -1,0 +1,101 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        body{
+            background-color: #FFEA00;
+
+        }
+        .btn{
+            margin-left: 9%;
+            background: none;
+            border: none;
+            position: relative;
+            width: 20%;
+            height: 100%;
+            overflow: hidden;
+            padding-bottom: 0%;
+
+        }
+        img{
+            max-width: 100%;
+        }
+    </style>
+    <script language = "javascript">
+        var sessionKey = "{{ sessionKey }}";
+        
+        var chatSocket = new WebSocket(
+            'ws://' + window.location.host + '/ws/sgs/RPS/' + sessionKey + '/');
+
+
+        function btnR_click(){
+            chatSocket.send(JSON.stringify({
+            'opcode': 'refresh',
+            'container': 'R'
+            }));
+            var wintext = document.getElementsByTagName('p')[0];
+            wintext.innerText = "";
+        }
+        function btnS_click(){
+            chatSocket.send(JSON.stringify({
+            'opcode': 'refresh',
+            'container': 'S'
+            }));
+            var wintext = document.getElementsByTagName('p')[0];
+            wintext.innerText = "";
+        }
+        function btnP_click(){
+            chatSocket.send(JSON.stringify({
+            'opcode': 'refresh',
+            'container': 'P'
+            }));
+            var wintext = document.getElementsByTagName('p')[0];
+            wintext.innerText = "";
+        }
+
+        document.addEventListener("DOMContentLoaded", function (event) {
+            chatSocket.onmessage = function (e) {
+            var data = JSON.parse(e.data);
+            console.log(data);
+            // var message = data['message'];
+            if(data['opcode'] == 'result'){
+                if(data['win'] == 'true'){
+                    var wintext = document.getElementsByTagName('p')[0];
+                    wintext.innerText = "WIN";
+                }
+                else{
+                    document.body.style.backgroundColor = "gray";
+                    var buttonlist = document.getElementsByTagName('div');
+                    buttonlist[0].parentNode.removeChild(buttonlist[0]);
+                    var img = document.createElement('img');
+                    img.style.position ="absolute";
+                    img.style.top = "10%";
+                    img.style.left = "25%";
+                    img
+                    img.src = "{% static 'RPS/lose.png' %}";
+                    document.body.appendChild(img);
+                }
+            };
+        };
+        });
+        
+    </script>
+</head>
+<body>
+<div>
+    <button type="button" class="btn" onclick="btnR_click();">
+        <img src="{% static 'RPS/rock.png' %}">
+    </button>
+    <button type="button" class="btn" onclick="btnS_click();">
+        <img src="{% static 'RPS/scissors.png' %}">
+    </button>
+    <button type="button" class="btn" onclick="btnP_click();">
+        <img src="{% static 'RPS/paper.png' %}">
+    </button>
+    <p style="font-size: 10vh; position: absolute; top: 70%; left:45%"></p>
+</div>
+</body>
+</html>

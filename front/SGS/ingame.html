@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+
+        <style>
+        .main_container{
+            width: 100%;
+            height: 100%;
+        }
+        .main_playerA{
+            width: 100%;
+            height: 30%;
+            background-image: url("boardimg.png");
+            float: none;
+            position: absolute; top: 0; left: 0;
+
+        }
+        .main_playerB{
+            width:100%;
+            height:30%;
+            background-image: url("boardimg.png");
+            float:left;
+            position: absolute; bottom: 0; left: 0;}
+        .main_playerD {
+            width:20%;
+            height:100%;
+            background-image: url("boardimg.png");
+            position: absolute; top: 0; right:0;
+            float:left;}
+        .main_center {
+            width:60%;
+            height:40%;
+            background-image: url("boardimg.png");
+            float:left;
+            position: absolute; top: 30%; left:20%;}
+        .main_playerC{
+            width:20%;
+            height:100%;
+            background-image: url("boardimg.png");
+            float:left;
+            position: absolute; top :0; left:0;}
+        .main_center_icon {
+            width: 10%;
+            height: 10%;
+            position: absolute;top: 10%; left: 45%;
+            text-align:left;
+            
+            }
+
+        .main_baticon {
+            width: 30%;
+            height: 30%;
+            background-image: url("boardimg.png");
+            position: absolute; top: 65%; left: 35%;
+            float:left;
+            
+        }
+
+        .main_playerA_card1{
+            width: 80%;
+            height: 80%;
+            float: left;
+            position: absolute;top: 10%; left: 25%;
+        }
+        .main_playerA_card2{
+            width: 80%;
+            height: 80%;
+            float: left;
+            position: absolute;top: 10%; left: 35%;
+        }
+        .main_playerA_card3{
+            width: 80%;
+            height: 80%;
+            float: left;
+            position: absolute;top: 10%; left: 45%;
+        }
+        .main_playerA_card4{
+            width: 80%;
+            height: 80%;
+            float: left;
+            position: absolute;top: 10%; left: 55%;
+        }
+        .main_playerA_card5{
+            width: 80%;
+            height: 80%;
+            float: left;
+            position: absolute;top: 10%; left: 65%;
+        }
+
+        .main_playerB_card1{
+            width: 80%;
+            height: 80%;
+            float: left;
+            position: absolute;top: 10%;left: 25%;
+        }
+        .main_playerB_card2{
+            width: 80%;
+            height: 80%;
+            float: left;
+            position: absolute;top: 10%;left: 35%;
+        }
+        .main_playerB_card3{
+            width: 80%;
+            height: 80%;
+            float: left;
+            position: absolute;top: 10%;left: 45%;
+        }
+        .main_playerB_card4{
+            width: 80%;
+            height: 80%;
+            float: left;
+            position: absolute;top: 10%;left: 55%;
+        }
+        .main_playerB_card5{
+            width: 80%;
+            height: 80%;
+            float: left;
+            position: absolute;top: 10%;left: 65%;
+        }
+        .main_playerC_card1{
+            width: 60%;
+            height: 60%;
+            float: left;
+            position: absolute;top: 5%;left: 15%;
+        }
+        .main_playerC_card2{
+            width: 60%;
+            height: 60%;
+            float: left;
+            position: absolute;top: 23%;left: 15%;
+        }
+        .main_playerC_card3{
+            width: 60%;
+            height: 60%;
+            float: left;
+            position: absolute;top: 41%;left: 15%;
+        }
+        .main_playerC_card4{
+            width: 60%;
+            height: 60%;
+            float: left;
+            position: absolute;top: 59%;left: 15%;
+        }
+        .main_playerC_card5{
+            width: 60%;
+            height: 60%;
+            float: left;
+            position: absolute;top: 77%;left: 15%;
+        }
+
+        .main_playerD_card1{
+            width: 60%;
+            height: 60%;
+            float: left;
+            position: absolute;top: 5%;left: 25%;
+        }
+        .main_playerD_card2{
+            width: 60%;
+            height: 60%;
+            float: left;
+            position: absolute;top: 23%;left: 25%;
+        }
+        .main_playerD_card3{
+            width: 60%;
+            height: 60%;
+            float: left;
+            position: absolute;top: 41%;left: 25%;
+        }
+        .main_playerD_card4{
+            width: 60%;
+            height: 60%;
+            float: left;
+            position: absolute;top: 59%;left: 25%;
+        }
+        .main_playerD_card5{
+            width: 60%;
+            height: 60%;
+            float: left;
+            position: absolute;top: 77%;left: 25%;
+        }
+
+        .main_chip_img{
+            width: 300%;
+            height: 300%;
+            float: left;
+            position: absolute;top: 100%;left: 0;
+        }
+   
+        .main_batimage{
+            width: 100%;
+            height:  auto;
+            
+        }
+  
+        .main_batnum_txt{
+          font-size: 2vw;
+            position: absolute; top: 0%; left: 50%;
+            float:left;
+        }
+
+        .main_playerA_card{
+            height: 100%;
+            width: auto;
+        }
+
+        .main_playerB_card{
+            height: 100%;
+            width: auto;
+        }
+
+        .main_playerC_card{
+            height: auto;
+            width: 100%;
+        }
+
+        .main_playerD_card{
+            height: auto;
+            width: 100%;
+        }
+        .main_chip{
+            height: 100%;
+            width: auto;
+        }
+
+        </style>
+
+    </head>
+<body>
+    <div class="main_container">
+        <div class="main_playerA">PlayerA
+            <div class="main_playerA_card1">
+                <img class="main_playerA_card"src="back.png">
+            </div>
+            <div class="main_playerA_card2">
+                <img class="main_playerA_card"src="back.png">
+            </div>
+            <div class="main_playerA_card3">
+                <img class="main_playerA_card"src="back.png">
+            </div>
+            <div class="main_playerA_card4">
+                <img class="main_playerA_card"src="back.png">
+            </div>
+            <div class="main_playerA_card5">
+                <img class="main_playerA_card"src="back.png">
+            </div>
+        </div>
+
+        <div class="main_playerB">PlayerB
+            <div class="main_playerB_card1">
+                <img class="main_playerB_card"src="back.png">
+            </div>
+            <div class="main_playerB_card2">
+                <img class="main_playerB_card"src="back.png">
+            </div>
+            <div class="main_playerB_card3">
+                <img class="main_playerB_card"src="back.png">
+            </div>
+            <div class="main_playerB_card4">
+                <img class="main_playerB_card"src="back.png">
+            </div>
+            <div class="main_playerB_card5">
+                <img class="main_playerB_card"src="back.png">
+            </div>
+        </div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </div>
+        <div class="main_center">
+            <div class="main_baticon">
+                <img class="main_batimage"src="baticon.png">
+                <div class="main_batnum_txt">
+                    <p>1000</p>
+                </div> 
+            </div>
+            <div class="main_center_icon">
+                <div class="main_chip_img">
+                    <img class="main_chip"src="chip_much.png">
+                </div>
+            </div>
+        </div>
+        <div class="main_playerD">PlayerD
+            <div class="main_playerD_card1">
+                <img class="main_playerD_card"src="back_r.png">
+            </div>
+            <div class="main_playerD_card2">
+                <img class="main_playerD_card"src="back_r.png">
+            </div>
+            <div class="main_playerD_card3">
+                <img class="main_playerD_card"src="back_r.png">
+            </div>
+            <div class="main_playerD_card4">
+                <img class="main_playerD_card"src="back_r.png">
+            </div>
+            <div class="main_playerD_card5">
+                <img class="main_playerD_card"src="back_r.png">
+            </div>
+        </div>
+        <div class="main_playerC">PlayerC
+            <div class="main_playerC_card1">
+                <img class="main_playerC_card"src="back_r.png">
+            </div>
+            <div class="main_playerC_card2">
+                <img class="main_playerC_card"src="back_r.png" >
+            </div>
+            <div class="main_playerC_card3">
+                <img class="main_playerC_card"src="back_r.png">
+            </div>
+            <div class="main_playerC_card4">
+                <img class="main_playerC_card"src="back_r.png" >
+            </div>
+            <div class="main_playerC_card5">
+                <img class="main_playerC_card"src="back_r.png" >
+            </div>
+        </div>
+</div>
+
+</body>
+</html>

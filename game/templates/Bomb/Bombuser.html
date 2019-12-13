@@ -1,0 +1,79 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+         body{
+            background-color: red;
+            text-align: center;
+            height: auto;
+        }
+        .btn{
+            margin-left: 9%;
+            background: none;
+            border: none;
+            position: absolute;left: 30%;top: 30%;
+            width: 20%;
+            height: 100%;
+            overflow: hidden;
+            padding-bottom: 0%;
+
+        }
+        img{
+            max-width: 100%;
+        }
+        .random img{
+            position: relative;
+            width: 40%;
+            height: 100%;
+            overflow: hidden;
+            padding-bottom: 0%;
+        }
+
+        .random p{
+            margin-top: 13%;
+            font-size: 10vh;
+        }
+    </style>
+    <script language = "javascript">
+        var sessionKey = "{{ sessionKey }}";
+        
+        var chatSocket = new WebSocket(
+            'ws://' + window.location.host + '/ws/sgs/bomb/' + sessionKey + '/');
+
+        function push_bomb() {
+            chatSocket.send(JSON.stringify({
+                'opcode': 'push_bomb'
+            }));
+            var img = document.getElementsByTagName('img')[0];
+            img.src = "{% static 'Bomb/waiting.gif' %}";
+        }
+
+        document.addEventListener("DOMContentLoaded", function (event) {
+            chatSocket.onmessage = function (e) {
+            var data = JSON.parse(e.data);
+            console.log(data);
+            if(data['opcode'] == 'get_bomb'){
+                //Todo: 폭탄이 참가자 자신에게 왔을때로서 폭탄 요소 보이게 하는 부분 구현 필요
+                var img = document.getElementsByTagName('img')[0];
+                img.src = "{% static 'Bomb/bomb.png' %}";
+            };
+        };
+        });
+        
+    </script>
+</head>
+<body>
+<div>
+<div class="random">
+    <P id = "logo" style="font-family: 'Bebas Neue'">
+        Bomb
+    </P>
+        <img src="{% static 'Bomb/waiting.gif' %}" onclick="push_bomb()">
+    
+</div>
+</div>
+</body>
+</html>

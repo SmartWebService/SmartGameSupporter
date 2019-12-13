@@ -1,0 +1,107 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="{% static 'RPS/RSPmain.css' %}" rel="stylesheet">
+    <title></title>
+    <style>
+        body{
+            background-color: #FFEA00;
+            text-align: center;
+        }
+        .userlist{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 20%;
+            height: 100%;
+            background-color: #ffffff;
+            border-right: 1px solid #ddd;
+            cursor: default;
+            font-size:8vh;
+        }
+        .user{
+            display: block;
+            width: 60%;
+            height: 100%;
+            padding: 10%;
+            margin: 0;
+            text-align: center;
+            background-color: #ffffff;
+        }
+        .RSPlogo p{
+            margin-top: 13%;
+            font-size: 14vh;
+        }
+        .RSPlogo img{
+            margin-top: -3%;
+            position: relative;
+            width: 40%;
+            height: 100%;
+            overflow: hidden;
+            padding-bottom: 0%;
+        }
+    </style>
+    <script>
+        var type = {{ type }};
+        var game_code = {{ game_code }};
+        var username = "{{ username }}";
+        var sessionKey = "{{ sessionKey }}";
+        
+
+        var chatSocket = new WebSocket(
+            'ws://' + window.location.host + '/ws/sgs/RPS/' + sessionKey + '/');
+        
+        document.addEventListener("DOMContentLoaded", function (e) {
+            var data = JSON.parse(e.data);
+        chatSocket.onmessage = function (e) {
+        console.log(data);
+       // var message = data['message'];
+        if(data['opcode'] == 'p_refresh' || data['opcode'] == 'refresh'  ){
+            var participants = data['participants'];
+            console.log(participants);
+             // document.getElementById("userList").innerHTML = "";
+            document.querySelector('.userlist').textContent = "";
+            for(var i=0; i< participants.length; i++){
+                console.log("<li>" + participants[i] +"</li>");
+                    // document.getElementById("userList").append("<li>" + participants[i] +"</li>");
+                document.querySelector('.userlist').append(participants[i]+"  ");
+                    // document.getElementById("userList").innerHTML += "<li>" + participants +"</li>";
+            }
+            }
+         };
+        });
+        
+        chatSocket.onclose = function (e) {
+            console.error('Chat socket closed unexpectedly');
+        };
+    </script>
+</head>
+<body>
+<div class="Box1">
+    <div class="userlist">
+        <p style="text-align: center">현재 참여자 목록</p>
+        <ul>
+            <!--<li class="user">USER1</li>
+            <li class="user">USER2</li>
+            <li class="user">USER3</li>
+            <li class="user">USER4</li>
+            <li class="user">USER5</li>
+            <li class="user">USER6</li>
+            <li class="user">USER7</li>
+            <li class="user">USER8</li> -->
+        </ul>
+    </div>
+</div>
+<div class="RSPlogo">
+    <P style="font-family: 'Bebas Neue'">
+        "Rock Scissors Paper"
+    </P>
+    <img src="{% static 'RPS/RSP.png' %}">
+</div>
+<div class="wrap" onclick="location.href='RSPresult.html'" align="right">
+    <button class="button" style="margin: 4% 18% 0 0;">START</button>
+</div>
+</body>
+</html>

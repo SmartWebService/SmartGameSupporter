@@ -1,0 +1,147 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="{% static 'RPS/RSPmain.css' %}" rel="stylesheet">
+    <title></title>
+    <style>
+        body{
+            background-color: #FFEA00;
+            text-align: center;
+            height: auto;
+        }
+        .random img{
+            position: relative;
+            width: 40%;
+            height: 100%;
+            overflow: hidden;
+            padding-bottom: 0%;
+        }
+
+        .random p{
+            margin-top: 3%;
+            font-size: 10vh;
+        }
+        .userlist{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 20%;
+            height: 100%;
+            background-color: #FFEA00;
+            border-right: 1px solid #ffffff;
+            cursor: default;
+            font-size: 6vh;
+        }
+        .user{
+            display: block;
+            width: 60%;
+            height: 100%;
+            padding: 10%;
+            margin: 0;
+            text-align: center;
+            background-color: #ffffff;
+        }
+    </style>
+    <script language = "javascript">
+        var imgArray = new Array();
+        imgArray[0] = "{% static 'RPS/R.png' %}";
+        imgArray[1] = "{% static 'RPS/P.png' %}";
+        imgArray[2] = "{% static 'RPS/S.png' %}";
+
+        var sessionKey = "{{ sessionKey }}";
+        
+        var chatSocket = new WebSocket(
+            'ws://' + window.location.host + '/ws/sgs/RPS/' + sessionKey + '/');
+
+
+        function showImage(){
+            var imgNum = Math.round(Math.random()*2);
+            var objImg = document.getElementById("introImg");
+            var objLogo = document.getElementById("logo");
+            objLogo.textContent = "";
+            objImg.src = imgArray[imgNum];
+            var RPS;
+            if(imgNum == 0){
+                RPS = 'R';
+            }
+            if(imgNum == 1){
+                RPS = 'P';
+            }
+            if(imgNum == 2){
+                RPS = 'S';
+            }
+            chatSocket.send(JSON.stringify({
+            'opcode': 'game_end',
+            'container': RPS
+            }));
+            
+        }
+
+        document.addEventListener("DOMContentLoaded", function (event) {
+        chatSocket.onmessage = function (e) {
+        var data = JSON.parse(e.data);
+        console.log(data);
+        // var message = data['message'];
+        if(data['opcode'] == 'refresh'){
+            var nextline = document.createElement('br');
+            var participants = data['participants'];
+            var containers = data['containers'];
+            console.log(participants);
+            
+           // document.getElementById("userList").innerHTML = "";
+            document.querySelector('.userlist').textContent = "";
+            for(var i=0; i<participants.length; i++){
+                console.log("<li>" + participants[i] +"</li>");
+                    // document.getElementById("userList").append("<li>" + participants[i] +"</li>");
+                document.querySelector('.userlist').append(participants[i]+" ");
+                var selectedimage = document.createElement('img');
+                if(containers[i] == "S"){
+                    selectedimage.src = "{% static 'RPS/s_scissor.png' %}";
+                }
+                else if(containers[i] == "P"){
+                    selectedimage.src = "{% static 'RPS/s_paper.png' %}";
+                }
+                else if(containers[i] == "R"){
+                    selectedimage.src = "{% static 'RPS/s_rock.png' %}";
+                }
+                selectedimage.style.height = "50px";
+                selectedimage.style.width = "50px";
+                document.querySelector('.userlist').appendChild(selectedimage.cloneNode(true));
+                document.querySelector('.userlist').appendChild(nextline.cloneNode(true));
+                    // document.getElementById("userList").innerHTML += "<li>" + participants +"</li>";
+            }
+                
+        }
+        }});
+    </script>
+</head>
+<body >
+<div class="Box1">
+    <div class="userlist">
+        <p style="text-align: center"></p>
+        <ul>
+            <!--<li class="user">USER1</li>
+            <li class="user">USER2</li>
+            <li class="user">USER3</li>
+            <li class="user">USER4</li>
+            <li class="user">USER5</li>
+            <li class="user">USER6</li>
+            <li class="user">USER7</li>
+            <li class="user">USER8</li>-->
+        </ul>
+    </div>
+</div>
+<div class="random">
+    <P id = "logo" style="font-family: 'Bebas Neue'">
+        "Rock Scissors Paper"
+    </P>
+    <img id = "introImg" border="0" src="{% static 'RPS/RSP.png' %}" >
+</div>
+<div class="wrap" align="right">
+    <button class="button" style="margin: 4% 18% 0 0;" onclick="showImage()">START</button>
+</div>
+
+</body>
+</html>

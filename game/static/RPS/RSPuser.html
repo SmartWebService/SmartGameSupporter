@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        body{
+            background-color: #FFEA00;
+
+        }
+        .btn{
+            margin-left: 9%;
+            background: none;
+            border: none;
+            position: relative;
+            width: 20%;
+            height: 100%;
+            overflow: hidden;
+            padding-bottom: 0%;
+
+        }
+        img{
+            max-width: 100%;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <button type="button" class="btn" onclick="btnR_click();">
+        <img src="rock.png">
+        <script>
+            function btnR_click() {
+                alert("바위를 선택하셨습니다.");
+            }
+        </script>
+    </button>
+    <button type="button" class="btn" onclick="btnS_click();">
+        <img src="scissors.png">
+        <script>
+            function btnS_click() {
+                alert("가위를 선택하셨습니다.");
+            }
+        </script>
+    </button>
+    <button type="button" class="btn" onclick="btnP_click()">
+        <img src="paper.png">
+        <script>
+            function btnP_click() {
+                alert("보자기를 선택하셨습니다.");
+            }
+        </script>
+    </button>
+</div>
+</body>
+</html>

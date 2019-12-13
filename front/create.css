@@ -1,0 +1,861 @@
+html,body{
+    margin: 0;
+    height: 100%;
+    overhtml,body{
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: 'Roboto', sans-serif;
+}
+body {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(137deg, #fff6b7, #f77c99, #6578f2, #c2ffd8);
+    background-size: 1000% 1000%;
+    -webkit-animation: AnimationName 22s ease infinite;
+    -moz-animation: AnimationName 22s ease infinite;
+    -o-animation: AnimationName 22s ease infinite;
+    animation: AnimationName 22s ease infinite;
+}
+@-webkit-keyframes AnimationName {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%} }
+@-moz-keyframes AnimationName {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%} }
+@-o-keyframes AnimationName {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%} }
+@keyframes AnimationName {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%} }
+
+
+.wrap {
+    margin: 0 10% 15% 40%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.button {
+    width: 25%;
+    height: 85px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.5vw;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    font-weight: 500;
+    color: #000;
+    background-color: #fff;
+    border: none;
+    border-radius: 45px;
+    box-shadow: 0px 8px 15px rgba(93, 93, 93, 0.57);
+    transition: all 0.3s ease 0s;
+    cursor: pointer;
+    outline: none;
+    position: absolute; top:70%; left:50%;
+}
+
+.button:hover {
+    background-color: #ffff;
+    box-shadow: 0px 15px 20px rgba(85, 85, 87, 0.49);
+    color: #000;
+    transform: translateY(-7px);
+}
+
+.userlist{
+    position: absolute;
+    top: 0;
+    left: 0;
+    
+    width: 20%;
+    height: 100%;
+    background-color: #ffffff;
+    border-right: 1px solid #ddd;
+    cursor: default;
+}
+
+.user{
+    display: block;
+    width: 60%;
+    height: 100%;
+    padding: 10%;
+    margin: 0;
+    text-align: center;
+    background-color: #ffffff;
+}
+.gamecode{
+    font-family: 'Roboto', sans-serif;
+    font-size: 6vw;
+    font-weight: bolder;
+    color: white;
+    text-align: center;
+    position: absolute; top:10%; left:50%;
+}
+.continput {
+    font-family: 'Roboto', sans-serif;
+    font-weight: bolder;
+    color: #4e4e4e;
+    font-size: 2.5vw;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    position: absolute; top:-10%; left: 10%;
+    width: 30%;
+    height: 15%;
+    padding: 16px;
+    box-sizing: border-box;
+}
+
+ul{
+    list-style-type: none;
+    width: 25%;
+    margin: auto;
+}
+
+li {
+    position: relative;
+    padding: 10px;
+    padding-left: 40px;
+    height:20%;
+}
+
+label:before {
+    content: "";
+    width: 15px;
+    height: 15px;
+    background: #fff;
+    position: absolute;
+    left: 7px;
+    top: calc(50% - 13px);
+    box-sizing: border-box;
+    border-radius: 50%;
+}
+
+input[type="radio"] {
+    opacity: 0;
+    -webkit-appearance: none;
+    display: inline-block;
+    vertical-align: middle;
+    z-index: 100;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 30px;
+    position: absolute;
+    left: 0;
+    top: calc(50% - 15px);
+    cursor: pointer;
+}
+
+.bullet {
+    position: absolute;
+    width: 25%;
+    height: 25%;
+    left: -1%;
+    top: 30%;
+    border: 4px solid #fff;
+    opacity: 0;
+    border-radius: 100%;
+}
+
+input[type="radio"]:checked ~ .bullet {
+    position:absolute;
+    opacity: 1;
+    animation-name: explode;
+    animation-duration: 0.350s;
+}
+
+.line {
+    position: absolute;
+    width: 10px;
+    height: 2px;
+    background-color: #fff;
+    opacity:0;
+}
+
+.line.zero {
+    left: 11px;
+    top: -21px;
+    transform: translateY(20px);
+    width: 2px;
+    height: 10px;
+}
+
+.line.one {
+    right: -7px;
+    top: -11px;
+    transform: rotate(-55deg) translate(-9px);
+}
+
+.line.two {
+    right: -20px;
+    top: 11px;
+    transform: translate(-9px);
+}
+
+.line.three {
+    right: -8px;
+    top: 35px;
+    transform: rotate(55deg) translate(-9px);
+}
+
+.line.four {
+    left: -8px;
+    top: -11px;
+    transform: rotate(55deg) translate(9px);
+}
+
+.line.five {
+    left: -20px;
+    top: 11px;
+    transform: translate(9px);
+}
+
+.line.six {
+    left: -8px;
+    top: 35px;
+    transform: rotate(-55deg) translate(9px);
+}
+
+.line.seven {
+    left: 11px;
+    bottom: -21px;
+    transform: translateY(-20px);
+    width: 2px;
+    height: 10px;
+}
+
+input[type="radio"]:checked ~ .bullet .line.zero{
+    animation-name:drop-zero;
+    animation-delay: 0.100s;
+    animation-duration: 0.9s;
+    animation-fill-mode: forwards;
+}
+
+input[type="radio"]:checked ~ .bullet .line.one{
+    animation-name:drop-one;
+    animation-delay: 0.100s;
+    animation-duration: 0.9s;
+    animation-fill-mode: forwards;
+}
+
+input[type="radio"]:checked ~ .bullet .line.two{
+    animation-name:drop-two;
+    animation-delay: 0.100s;
+    animation-duration: 0.9s;
+    animation-fill-mode: forwards;
+}
+
+input[type="radio"]:checked ~ .bullet .line.three{
+    animation-name:drop-three;
+    animation-delay: 0.100s;
+    animation-duration: 0.9s;
+    animation-fill-mode: forwards;
+}
+
+input[type="radio"]:checked ~ .bullet .line.four{
+    animation-name:drop-four;
+    animation-delay: 0.100s;
+    animation-duration: 0.9s;
+    animation-fill-mode: forwards;
+}
+
+input[type="radio"]:checked ~ .bullet .line.five{
+    animation-name:drop-five;
+    animation-delay: 0.100s;
+    animation-duration: 0.9s;
+    animation-fill-mode: forwards;
+}
+
+input[type="radio"]:checked ~ .bullet .line.six{
+    animation-name:drop-six;
+    animation-delay: 0.100s;
+    animation-duration: 0.9s;
+    animation-fill-mode: forwards;
+}
+
+input[type="radio"]:checked ~ .bullet .line.seven{
+    animation-name:drop-seven;
+    animation-delay: 0.100s;
+    animation-duration: 0.9s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes explode {
+    0%{
+        opacity: 0;
+        transform: scale(10);
+    }
+    60%{
+        opacity: 1;
+        transform: scale(0.5);
+    }
+    100%{
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes drop-zero {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+        height: 10px;
+    }
+    20% {
+        opacity:1;
+    }
+    100% {
+        transform: translateY(-2px);
+        height: 0px;
+        opacity:0;
+    }
+}
+
+@keyframes drop-one {
+    0% {
+        opacity: 0;
+        transform: rotate(-55deg) translate(-20px);
+        width: 10px;
+    }
+    20% {
+        opacity:1;
+    }
+    100% {
+        transform: rotate(-55deg) translate(9px);
+        width: 0px;
+        opacity:0;
+    }
+}
+
+@keyframes drop-two {
+    0% {
+        opacity: 0;
+        transform: translate(-20px);
+        width: 10px;
+    }
+    20% {
+        opacity:1;
+    }
+    100% {
+        transform: translate(9px);
+        width: 0px;
+        opacity:0;
+    }
+}
+
+@keyframes drop-three {
+    0% {
+        opacity: 0;
+        transform: rotate(55deg) translate(-20px);
+        width: 10px;
+    }
+    20% {
+        opacity:1;
+    }
+    100% {
+        transform: rotate(55deg) translate(9px);
+        width: 0px;
+        opacity:0;
+    }
+}
+
+@keyframes drop-four {
+    0% {
+        opacity: 0;
+        transform: rotate(55deg) translate(20px);
+        width: 10px;
+    }
+    20% {
+        opacity:1;
+    }
+    100% {
+        transform: rotate(55deg) translate(-9px);
+        width: 0px;
+        opacity:0;
+    }
+}
+
+@keyframes drop-five {
+    0% {
+        opacity: 0;
+        transform: translate(20px);
+        width: 10px;
+    }
+    20% {
+        opacity:1;
+    }
+    100% {
+        transform: translate(-9px);
+        width: 0px;
+        opacity:0;
+    }
+}
+
+@keyframes drop-six {
+    0% {
+        opacity: 0;
+        transform: rotate(-55deg) translate(20px);
+        width: 10px;
+    }
+    20% {
+        opacity:1;
+    }
+    100% {
+        transform: rotate(-55deg) translate(-9px);
+        width: 0px;
+        opacity:0;
+    }
+}
+
+@keyframes drop-seven {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+        height: 10px;
+    }
+    20% {
+        opacity:1;
+    }
+    100% {
+        transform: translateY(2px);
+        height: 0px;
+        opacity:0;
+    }
+}flow: hidden;
+    font-family: 'Roboto', sans-serif;
+}
+body {
+    background: linear-gradient(137deg, #fff6b7, #f77c99, #6578f2, #c2ffd8);
+    background-size: 10000% 10000%;
+    -webkit-animation: AnimationName 22s ease infinite;
+    -moz-animation: AnimationName 22s ease infinite;
+    -o-animation: AnimationName 22s ease infinite;
+    animation: AnimationName 22s ease infinite;
+}
+@-webkit-keyframes AnimationName {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%} }
+@-moz-keyframes AnimationName {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%} }
+@-o-keyframes AnimationName {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%} }
+@keyframes AnimationName {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%} }
+
+
+.wrap {
+    margin: 0 10% 15% 40%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.button {
+    width: 220px;
+    height: 85px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    font-weight: 500;
+    color: #000;
+    background-color: #fff;
+    border: none;
+    border-radius: 45px;
+    box-shadow: 0px 8px 15px rgba(93, 93, 93, 0.57);
+    transition: all 0.3s ease 0s;
+    cursor: pointer;
+    outline: none;
+}
+
+.button:hover {
+    background-color: #ffff;
+    box-shadow: 0px 15px 20px rgba(85, 85, 87, 0.49);
+    color: #000;
+    transform: translateY(-7px);
+}
+
+.userlist{
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    padding: 0;
+    width: 20%;
+    height: 100%;
+    background-color: #ffffff;
+    border-right: 1px solid #ddd;
+    cursor: default;
+}
+
+.user{
+    display: block;
+    width: 60%;
+    height: 100%;
+    padding: 10%;
+    margin: 0;
+    text-align: center;
+    background-color: #ffffff;
+}
+.gamecode{
+    font-family: 'Roboto', sans-serif;
+    font-size: 70px;
+    font-weight: bolder;
+    color: white;
+    text-align: center;
+    margin: 9% 10% 0 31%;
+}
+.continput {
+    font-family: 'Roboto', sans-serif;
+    font-weight: bolder;
+    color: #4e4e4e;
+    font-size: 20px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    width: 500px;
+    height: 270px;
+    padding: 16px;
+    box-sizing: border-box;
+}
+
+ul{
+    list-style-type: none;
+    width: 220px;
+    margin: auto;
+}
+
+li {
+    position: relative;
+    padding: 10px;
+    padding-left: 40px;
+    height:30px;
+}
+
+label:before {
+    content: "";
+    width: 15px;
+    height: 15px;
+    background: #fff;
+    position: absolute;
+    left: 7px;
+    top: calc(50% - 13px);
+    box-sizing: border-box;
+    border-radius: 50%;
+}
+
+input[type="radio"] {
+    opacity: 0;
+    -webkit-appearance: none;
+    display: inline-block;
+    vertical-align: middle;
+    z-index: 100;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 30px;
+    position: absolute;
+    left: 0;
+    top: calc(50% - 15px);
+    cursor: pointer;
+}
+
+.bullet {
+    position: relative;
+    width: 25px;
+    height: 25px;
+    left: -3px;
+    top: 2px;
+    border: 5px solid #fff;
+    opacity: 0;
+    border-radius: 50%;
+}
+
+input[type="radio"]:checked ~ .bullet {
+    position:absolute;
+    opacity: 1;
+    animation-name: explode;
+    animation-duration: 0.350s;
+}
+
+.line {
+    position: absolute;
+    width: 10px;
+    height: 2px;
+    background-color: #fff;
+    opacity:0;
+}
+
+.line.zero {
+    left: 11px;
+    top: -21px;
+    transform: translateY(20px);
+    width: 2px;
+    height: 10px;
+}
+
+.line.one {
+    right: -7px;
+    top: -11px;
+    transform: rotate(-55deg) translate(-9px);
+}
+
+.line.two {
+    right: -20px;
+    top: 11px;
+    transform: translate(-9px);
+}
+
+.line.three {
+    right: -8px;
+    top: 35px;
+    transform: rotate(55deg) translate(-9px);
+}
+
+.line.four {
+    left: -8px;
+    top: -11px;
+    transform: rotate(55deg) translate(9px);
+}
+
+.line.five {
+    left: -20px;
+    top: 11px;
+    transform: translate(9px);
+}
+
+.line.six {
+    left: -8px;
+    top: 35px;
+    transform: rotate(-55deg) translate(9px);
+}
+
+.line.seven {
+    left: 11px;
+    bottom: -21px;
+    transform: translateY(-20px);
+    width: 2px;
+    height: 10px;
+}
+
+input[type="radio"]:checked ~ .bullet .line.zero{
+    animation-name:drop-zero;
+    animation-delay: 0.100s;
+    animation-duration: 0.9s;
+    animation-fill-mode: forwards;
+}
+
+input[type="radio"]:checked ~ .bullet .line.one{
+    animation-name:drop-one;
+    animation-delay: 0.100s;
+    animation-duration: 0.9s;
+    animation-fill-mode: forwards;
+}
+
+input[type="radio"]:checked ~ .bullet .line.two{
+    animation-name:drop-two;
+    animation-delay: 0.100s;
+    animation-duration: 0.9s;
+    animation-fill-mode: forwards;
+}
+
+input[type="radio"]:checked ~ .bullet .line.three{
+    animation-name:drop-three;
+    animation-delay: 0.100s;
+    animation-duration: 0.9s;
+    animation-fill-mode: forwards;
+}
+
+input[type="radio"]:checked ~ .bullet .line.four{
+    animation-name:drop-four;
+    animation-delay: 0.100s;
+    animation-duration: 0.9s;
+    animation-fill-mode: forwards;
+}
+
+input[type="radio"]:checked ~ .bullet .line.five{
+    animation-name:drop-five;
+    animation-delay: 0.100s;
+    animation-duration: 0.9s;
+    animation-fill-mode: forwards;
+}
+
+input[type="radio"]:checked ~ .bullet .line.six{
+    animation-name:drop-six;
+    animation-delay: 0.100s;
+    animation-duration: 0.9s;
+    animation-fill-mode: forwards;
+}
+
+input[type="radio"]:checked ~ .bullet .line.seven{
+    animation-name:drop-seven;
+    animation-delay: 0.100s;
+    animation-duration: 0.9s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes explode {
+    0%{
+        opacity: 0;
+        transform: scale(10);
+    }
+    60%{
+        opacity: 1;
+        transform: scale(0.5);
+    }
+    100%{
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes drop-zero {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+        height: 10px;
+    }
+    20% {
+        opacity:1;
+    }
+    100% {
+        transform: translateY(-2px);
+        height: 0px;
+        opacity:0;
+    }
+}
+
+@keyframes drop-one {
+    0% {
+        opacity: 0;
+        transform: rotate(-55deg) translate(-20px);
+        width: 10px;
+    }
+    20% {
+        opacity:1;
+    }
+    100% {
+        transform: rotate(-55deg) translate(9px);
+        width: 0px;
+        opacity:0;
+    }
+}
+
+@keyframes drop-two {
+    0% {
+        opacity: 0;
+        transform: translate(-20px);
+        width: 10px;
+    }
+    20% {
+        opacity:1;
+    }
+    100% {
+        transform: translate(9px);
+        width: 0px;
+        opacity:0;
+    }
+}
+
+@keyframes drop-three {
+    0% {
+        opacity: 0;
+        transform: rotate(55deg) translate(-20px);
+        width: 10px;
+    }
+    20% {
+        opacity:1;
+    }
+    100% {
+        transform: rotate(55deg) translate(9px);
+        width: 0px;
+        opacity:0;
+    }
+}
+
+@keyframes drop-four {
+    0% {
+        opacity: 0;
+        transform: rotate(55deg) translate(20px);
+        width: 10px;
+    }
+    20% {
+        opacity:1;
+    }
+    100% {
+        transform: rotate(55deg) translate(-9px);
+        width: 0px;
+        opacity:0;
+    }
+}
+
+@keyframes drop-five {
+    0% {
+        opacity: 0;
+        transform: translate(20px);
+        width: 10px;
+    }
+    20% {
+        opacity:1;
+    }
+    100% {
+        transform: translate(-9px);
+        width: 0px;
+        opacity:0;
+    }
+}
+
+@keyframes drop-six {
+    0% {
+        opacity: 0;
+        transform: rotate(-55deg) translate(20px);
+        width: 10px;
+    }
+    20% {
+        opacity:1;
+    }
+    100% {
+        transform: rotate(-55deg) translate(-9px);
+        width: 0px;
+        opacity:0;
+    }
+}
+
+@keyframes drop-seven {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+        height: 10px;
+    }
+    20% {
+        opacity:1;
+    }
+    100% {
+        transform: translateY(2px);
+        height: 0px;
+        opacity:0;
+    }
+}
